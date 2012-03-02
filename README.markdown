@@ -27,16 +27,16 @@ The current version is 0.0.1
 ### Searching a single hash
 
 	% uirusu -h FD287794107630FA3116800E617466A9
- 
+
 ### Searching a file of hashes and outputting to XML
 	% uirusu -f <file_with_hashes_one_per_line> -x
 
 ### Upload a file to Virustotal and wait for analysis
 	% uirusu -u </path/to/file>
 
-### Search for a single URL 
+### Search for a single URL
 	% uirusu -s "http://www.google.com"
-	
+
 ### Saving results to a file
   % uirusu -s "http://www.google.com" --yaml-output > file.yaml
 
