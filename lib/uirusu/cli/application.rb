@@ -212,7 +212,8 @@ module Uirusu
 
 				if @hashes != nil
 					@hashes.each do |hash|
-						result = Uirusu::VTFile.query_report(@config["virustotal"]["api-key"], hash)
+						results = Uirusu::VTFile.query_report(@config["virustotal"]["api-key"], hash)
+						result = Uirusu::VTResult.new(hash, results)
 						print result.send output_method if result != nil
 					end
 				end
