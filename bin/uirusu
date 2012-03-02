@@ -1,0 +1,9 @@
+#!/usr/bin/env ruby
+
+$LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '/../lib'))
+
+require 'rubygems'
+require 'uirusu'
+
+app = Uirusu::CLI::Application.new
+app.main(ARGV)
