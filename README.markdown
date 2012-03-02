@@ -38,7 +38,7 @@ The current version is 0.0.1
 	% uirusu -s "http://www.google.com"
 
 ### Saving results to a file
-  % uirusu -s "http://www.google.com" --yaml-output > file.yaml
+	% uirusu -s "http://www.google.com" --yaml-output > file.yaml
 
 ## Contact
 You can reach me at Jacob[dot]Hammack[at]hammackj[dot]com or http://www.hammackj.com
