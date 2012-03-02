@@ -6,7 +6,7 @@ module Uirusu
 			if result == nil
 				return
 			end
-			
+
 			@results = Array.new
 
 			if result["response_code"] == 0
@@ -61,19 +61,19 @@ module Uirusu
 			
 			#if we didn't have any results let create a fake not found
 			if @results.size == 0
-				fres = Hash.new
-				fres['hash'] = hash
-				fres['scanner'] = '-'
-				fres['md5'] = '-'
-				fres['sha1'] = '-'
-				fres['sha256'] = '-'
-				fres['permalink'] = '-'
-				fres['detected'] = '-'
-				fres['version'] = '-'
-				fres['result']  = '-'
-				fres['update'] = '-'
-				fres['result'] = result["verbose_msg"]
-				@results.push fres				
+				res = Hash.new
+				res['hash'] = hash
+				res['scanner'] = '-'
+				res['md5'] = '-'
+				res['sha1'] = '-'
+				res['sha256'] = '-'
+				res['permalink'] = '-'
+				res['detected'] = '-'
+				res['version'] = '-'
+				res['result']  = '-'
+				res['update'] = '-'
+				res['result'] = result["verbose_msg"]
+				@results.push res				
 			end
 		end
 
