@@ -68,5 +68,9 @@ results = Uirusu::VTComment.post_comment(APT_KEY, hash, comment)
 print results if results != nil
 ```
 
+##License
+
+Uirusu is licensed under the BSD license see the `LICENSE` file for the full license.
+
 ## Contact
 You can reach me at Jacob[dot]Hammack[at]hammackj[dot]com or http://www.hammackj.com
