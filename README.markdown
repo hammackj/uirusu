@@ -42,8 +42,8 @@ The current version is 0.0.1
 
 
 ## API Usage
-#First you need to include the correct require files
 ```ruby
+#First you need to include the correct require files
 require 'rubygems'
 require 'uirusu'
 
