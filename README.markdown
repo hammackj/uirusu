@@ -1,6 +1,6 @@
 # uirusu
 
-uirusu is [virustotal](http://www.virustotal.com) automation and convenience tool for hash, file and URL submission.
+uirusu is an [Virustotal](http://www.virustotal.com) automation and convenience tool for hash, file and URL submission.
 
 The current version is 0.0.1
 
@@ -73,4 +73,4 @@ print results if results != nil
 Uirusu is licensed under the BSD license see the `LICENSE` file for the full license.
 
 ## Contact
-You can reach me at Jacob[dot]Hammack[at]hammackj[dot]com or http://www.hammackj.com
+You can reach me at uirusu[@]arxopia[dot]com or http://www.arxopia.com

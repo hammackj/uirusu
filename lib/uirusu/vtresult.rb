@@ -1,20 +1,20 @@
 # Copyright (c) 2012 Arxopia LLC.
 # All rights reserved.
-# 
+#
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are met:
-# 
-# Redistributions of source code must retain the above copyright notice, 
+#
+# Redistributions of source code must retain the above copyright notice,
 # this list of conditions and the following disclaimer.
 #
-# Redistributions in binary form must reproduce the above copyright notice, 
-# this list of conditions and the following disclaimer in the documentation 
+# Redistributions in binary form must reproduce the above copyright notice,
+# this list of conditions and the following disclaimer in the documentation
 # and/or other materials provided with the distribution.
 #
-# Neither the name of the project's author nor the names of its contributors 
-# may be used to endorse or promote products derived from this software 
+# Neither the name of the project's author nor the names of its contributors
+# may be used to endorse or promote products derived from this software
 # without specific prior written permission.
-# 
+#
 # THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
 # ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
 # WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -27,8 +27,8 @@
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 module Uirusu
-	#
-	#
+
+	#A wrapper class to hold all of the data for a single Virus total result
 	class VTResult
 		def initialize hash, result
 			if result == nil
@@ -61,7 +61,7 @@ module Uirusu
 				md5 = result["md5"]
 				sha1 = result["sha1"]
 				sha256 = result["sha256"]
-				
+
 				result["scans"].each do |scanner, value|
 					if value != ''
 						res = Hash.new
@@ -78,7 +78,7 @@ module Uirusu
 						else
 							res['result']  = value["result"]
 						end
-						
+
 						res['update'] = value['update']
 						res['permalink'] = permalink unless permalink == nil
 
@@ -86,7 +86,7 @@ module Uirusu
 					end
 				end
 			end
-			
+
 			#if we didn't have any results let create a fake not found
 			if @results.size == 0
 				res = Hash.new
@@ -101,7 +101,7 @@ module Uirusu
 				res['result']  = '-'
 				res['update'] = '-'
 				res['result'] = result["verbose_msg"]
-				@results.push res				
+				@results.push res
 			end
 		end
 
@@ -109,10 +109,10 @@ module Uirusu
 		#
 		def to_stdout
 			result_string = String.new
-			@results.each do |result|				
+			@results.each do |result|
 				result_string << "#{result['hash']}: Scanner: #{result['scanner']} Result: #{result['result']}\n"
 			end
-			
+
 			print result_string
 		end
 
@@ -132,7 +132,7 @@ module Uirusu
 				result_string << "  permalink: #{result['permalink']}\n" unless result['permalink'] == nil
 				result_string << "  result: #{result['result']}\n\n"
 			end
-			
+
 			print result_string
 		end
 
@@ -153,7 +153,7 @@ module Uirusu
 				result_string << "\t\t<result>#{result['result']}</result>\n"
 				result_string << "\t</vtresult>\n"
 			end
-			
+
 			print result_string
 		end
 	end
