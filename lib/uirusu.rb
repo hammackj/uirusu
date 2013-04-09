@@ -1,4 +1,4 @@
-# Copyright (c) 2012 Arxopia LLC.
+# Copyright (c) 2012-2013 Arxopia LLC.
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -28,7 +28,7 @@
 
 module Uirusu
 	APP_NAME = "uirusu"
-	VERSION = "0.0.3"
+	VERSION = "0.0.4"
 	CONFIG_FILE = "~/.uirusu"
 end
 

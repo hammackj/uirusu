@@ -1,7 +1,10 @@
 # News
 
 # 0.0.4 ()
--
+- Added Proxy support [abenson]
+- Copyright date updates
+- Made sure each hash request waits for the timeout specified in the yaml file
+- The default timeout is 15 seconds, by default virustotal.org only allows 4 requests per minute
 
 # 0.0.3 ()
 - Gemspec fix

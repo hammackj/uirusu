@@ -2,7 +2,7 @@
 
 uirusu is an [Virustotal](http://www.virustotal.com) automation and convenience tool for hash, file and URL submission.
 
-The current version is 0.0.1
+The current version is 0.0.4.
 
 ## Requirements
 

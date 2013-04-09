@@ -1,4 +1,4 @@
-# Copyright (c) 2012 Arxopia LLC.
+# Copyright (c) 2012-2013 Arxopia LLC.
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -87,7 +87,7 @@ module Uirusu
 				end
 			end
 
-			#if we didn't have any results let create a fake not found
+			#if we didn't have any results lets create a fake not found
 			if @results.size == 0
 				res = Hash.new
 				res['hash'] = hash
@@ -111,7 +111,7 @@ module Uirusu
 			result_string = String.new
 			@results.each do |result|
 				result_string << "#{result['hash']}: Scanner: #{result['scanner']} Result: #{result['result']}\n"
-			end
+			end if @results != nil
 
 			print result_string
 		end
@@ -131,7 +131,7 @@ module Uirusu
 				result_string << "  date: #{result['date']}\n"
 				result_string << "  permalink: #{result['permalink']}\n" unless result['permalink'] == nil
 				result_string << "  result: #{result['result']}\n\n"
-			end
+			end if @results != nil
 
 			print result_string
 		end
@@ -152,7 +152,7 @@ module Uirusu
 				result_string << "\t\t<permalink>#{result['permalink']}</permalink>\n" unless result['permalink'] == nil
 				result_string << "\t\t<result>#{result['result']}</result>\n"
 				result_string << "\t</vtresult>\n"
-			end
+			end if @results != nil
 
 			print result_string
 		end

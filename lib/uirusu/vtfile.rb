@@ -1,4 +1,4 @@
-# Copyright (c) 2012 Arxopia LLC.
+# Copyright (c) 2012-2013 Arxopia LLC.
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -46,7 +46,7 @@ module Uirusu
 			end
 
 			if resource == nil
-				raise "Invalid resource, must be MD5/sha1/sha256/scan_id"
+				raise "Invalid resource, must be md5/sha1/sha256/scan_id"
 			end
 
 			response = RestClient.post REPORT_URL, :apikey => api_key, :resource => resource

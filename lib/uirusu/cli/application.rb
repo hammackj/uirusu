@@ -1,4 +1,4 @@
-# Copyright (c) 2012 Arxopia LLC.
+# Copyright (c) 2012-2013 Arxopia LLC.
 # All rights reserved.
 # 
 # Redistribution and use in source and binary forms, with or without
@@ -48,6 +48,7 @@ module Uirusu
 				begin
 					@options['output'] = :stdout
 					@options['verbose'] = false
+					@options[:timeout] = 25
 				
 					opt = OptionParser.new do |opt|
 						opt.banner =	"#{APP_NAME} v#{VERSION}\nJacob Hammack\nhttp://www.hammackj.com\n\n"
@@ -116,6 +117,10 @@ module Uirusu
 							end
 						end
 
+						opt.on('-p PROXY', '--proxy-server', 'Uses a specified proxy server') do |proxy|
+							@options['proxy'] = proxy
+						end
+
 						opt.on('--[no-]verbose', 'Print verbose information') do |v|
 							@options["verbose"] = v
 						end
@@ -155,6 +160,8 @@ module Uirusu
 					STDERR.puts "[!] #{CONFIG_FILE} does not exist. Please run #{APP_NAME} --create-config, to create it."
 					exit
 				end
+
+				@options[:timeout] = @config["virustotal"]["timeout"] if @config["virustotal"]["timeout"] != nil
 			end
 			
 			# Submits a file/url and waits for analysis to be complete and returns the results.
@@ -203,7 +210,7 @@ module Uirusu
 						nil
 					end	
 				rescue => e					
-					STDERR.puts "[!] An error has occured retrieving the report. Retrying 60 seconds up #{retries} retries.\n" if  @options["verbose"]
+					STDERR.puts "[!] An error has occurred retrieving the report. Retrying 60 seconds up #{retries} retries.\n" if  @options["verbose"]
 					if retries >= 0
 						sleep 60
 						retry
@@ -227,6 +234,10 @@ module Uirusu
 					print "<results>\n"
 				end
 
+				if @options['proxy'] != nil
+					RestClient.proxy = @options['proxy']
+				end
+
 				if @files_of_hashes != nil
 					@files_of_hashes.each do |file|
 						f = File.open(file, 'r')
@@ -239,26 +250,29 @@ module Uirusu
 				end		
 
 				if @hashes != nil
-					@hashes.each do |hash|
+					@hashes.each_with_index do |hash, index|
 						results = Uirusu::VTFile.query_report(@config["virustotal"]["api-key"], hash)
 						result = Uirusu::VTResult.new(hash, results)
 						print result.send output_method if result != nil
+						sleep @options[:timeout] if index != @hashes.length - 1
 					end
 				end
 
 				if @sites != nil
-					@sites.each do |url|
+					@sites.each_with_index do |url, index|
 						results = scan_and_wait(Uirusu::VTUrl, url, 5)
 						result = Uirusu::VTResult.new(results[0], results[1])
 						print result.send output_method if result != nil
+						sleep @options[:timeout] if index != @sites.length - 1
 					end
 				end
 
 				if @uploads != nil
-					@uploads.each do |upload|
+					@uploads.each_with_index do |upload, index|
 						results = scan_and_wait(Uirusu::VTFile, upload, 5)
 						result = Uirusu::VTResult.new(results[0], results[1])						
 						print result.send output_method if result != nil
+						sleep @options[:timeout] if index != @uploads.length - 1
 					end
 				end
 
