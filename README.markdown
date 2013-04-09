@@ -7,7 +7,6 @@ The current version is 0.0.4.
 ## Requirements
 
 * ruby
-* rubygems
 * json
 * rest-client
 
@@ -73,4 +72,4 @@ print results if results != nil
 Uirusu is licensed under the BSD license see the `LICENSE` file for the full license.
 
 ## Contact
-You can reach me at uirusu[@]arxopia[dot]com or http://www.arxopia.com
+You can reach the team at uirusu[@]arxopia[dot]com or http://www.arxopia.com

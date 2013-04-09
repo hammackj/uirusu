@@ -1,6 +1,6 @@
 # News
 
-# 0.0.4 ()
+# 0.0.4 (April 11, 2013)
 - Added Proxy support [abenson]
 - Copyright date updates
 - Made sure each hash request waits for the timeout specified in the yaml file
@@ -15,3 +15,4 @@
 # 0.0.1 (March 4, 2012)
 - Rename ruby-virustotal/virustotal gem to uirusu, to prevent being sued.
 - Complete rewrite of the gem
+
