@@ -46,23 +46,29 @@ module Uirusu
 			# @return [Hash] of the parsed options
 			def parse_options(args)
 				begin
-					@options['output'] = :stdout
+					@options['output']  = :stdout
 					@options['verbose'] = false
-					@options[:timeout] = 25
+					@options['rescan']  = false
+					@options[:timeout]  = 25
 				
 					opt = OptionParser.new do |opt|
-						opt.banner =	"#{APP_NAME} v#{VERSION}\nJacob Hammack\nhttp://www.hammackj.com\n\n"
+						opt.banner = "#{APP_NAME} v#{VERSION}\nJacob Hammack\nhttp://www.hammackj.com\n\n"
 						opt.banner << "Usage: #{APP_NAME} <options>"
 						opt.separator('')
-						opt.separator("File Options")
+						opt.separator('File Options')
 				
 						opt.on('-h HASH', '--search-hash HASH', 'Searches a single hash on virustotal.com') do |hash| 
 							@hashes.push(hash)
 						end
 
+						opt.on('-r HASH[,HASH]', '--rescan-hash HASH[,HASH]', 'Requests a rescan of a single hash, or multiple hashes (comma separated), by virustotal.com') do |hash|
+							@options['rescan'] = true
+							@hashes.push(hash)
+						end
+
 						opt.on('-f FILE', '--search-hash-file FILE', 'Searches a each hash in a file of hashes on virustotal.com') do |file|
 							if File.exists?(file)
-								puts "[+] Adding file #{file}" if @options["verbose"]
+								puts "[+] Adding file #{file}" if @options['verbose']
 								@files_of_hashes.push(file)
 							else
 								puts "[!] #{file} does not exist, please check your input!\n"
@@ -71,7 +77,7 @@ module Uirusu
 					
 						opt.on('-u FILE', '--upload-file FILE', 'Uploads a file to virustotal.com for analysis') do |file|
 							if File.exists?(file)
-								puts "[+] Adding file #{file}" if @options["verbose"]
+								puts "[+] Adding file #{file}" if @options['verbose']
 								@uploads.push(file)
 							else
 								puts "[!] #{file} does not exist, please check your input!\n"
@@ -88,8 +94,12 @@ module Uirusu
 						opt.separator('')
 						opt.separator('Output Options')
 
+						opt.on('-j', '--json-output', 'Print results as json to stdout') do
+							@options['output'] = :json
+						end
+
 						opt.on('-x', '--xml-output', 'Print results as xml to stdout') do
-							@options["output"] = :xml
+							@options['output'] = :xml
 						end
 			
 						opt.on('-y', '--yaml-output', 'Print results as yaml to stdout') do
@@ -122,18 +132,18 @@ module Uirusu
 						end
 
 						opt.on('--[no-]verbose', 'Print verbose information') do |v|
-							@options["verbose"] = v
+							@options['verbose'] = v
 						end
 				
 						opt.separator ''
 						opt.separator 'Other Options'
 				
-						opt.on('-v', '--version', "Shows application version information") do
+						opt.on('-v', '--version', 'Shows application version information') do
 							puts "#{APP_NAME} - #{VERSION}"
 							exit
 						end
 
-						opt.on_tail("-?", "--help", "Show this message") { |help|
+						opt.on_tail('-?', '--help', 'Show this message') { |help|
 							puts opt.to_s + "\n"
 							exit
 						} 
@@ -161,7 +171,7 @@ module Uirusu
 					exit
 				end
 
-				@options[:timeout] = @config["virustotal"]["timeout"] if @config["virustotal"]["timeout"] != nil
+				@options[:timeout] = @config['virustotal']['timeout'] if @config['virustotal']['timeout'] != nil
 			end
 			
 			# Submits a file/url and waits for analysis to be complete and returns the results.
@@ -175,16 +185,22 @@ module Uirusu
 				retries = attempts
 				
 				if mod.name == "Uirusu::VTFile"
-					method = mod.method :scan_file
+					STDERR.puts "[*] Attempting to rescan #{resource}" if  @options['verbose']
+					method = @options['rescan'] ? mod.method(:rescan_file) : mod.method(:scan_file)
 				else
+					STDERR.puts "[*] Attempting to upload file #{resource}" if  @options['verbose']
 					method = mod.method :scan_url
 				end
 
 				begin
-					STDERR.puts "[*] Attempting to upload file #{resource}" if  @options["verbose"]
-					result = method.call(@config["virustotal"]["api-key"], resource)					
+					result = method.call(@config['virustotal']['api-key'], resource)					
 				rescue => e
-					STDERR.puts "[!] An error has occured uploading the file. Retrying 60 seconds up #{retries} retries.\n" if  @options["verbose"]
+					if @options['rescan']
+						STDERR.puts "[!] An error has occurred with the rescan request.  Retrying 60 seconds up #{retries} retries: #{e.message}\n" if  @options['verbose']
+					else
+						STDERR.puts "[!] An error has occurred uploading the file. Retrying 60 seconds up #{retries} retries.\n" if  @options['verbose']
+					end
+
 					if retries >= 0
 						sleep 60
 						retry
@@ -193,24 +209,43 @@ module Uirusu
 				end
 				
 				begin
-					if result['response_code']	== 1
-						results = mod.query_report(@config["virustotal"]["api-key"], result['resource'])
+
+					# Convert all single result replies to an array.  This is because
+					# rescan_file returns an array of results if more than one hash
+					# is requested to be rescanned.
+					result_array = result.is_a?(Array) ? result : [ result ]
+
+					result_array.collect do |result|
+						if result['response_code'] == 1
+							STDERR.puts "[*] Attempting to parse the results for: #{result['resource']}" if @options['verbose']
+							results = mod.query_report(@config['virustotal']['api-key'], result['resource'])
+							
+							while results['response_code'] != 1
+								STDERR.puts "[*] File has not been analyized yet, waiting 60 seconds to try again" if  @options['verbose']
+								sleep 60				
+								results = mod.query_report(@config['virustotal']['api-key'], result['resource'])
+							end
 						
-						while results["response_code"] != 1
-							STDERR.puts "[*] File has not been analyized yet, waiting 60 seconds to try again" if  @options["verbose"]
-							sleep 60				
-							results = mod.query_report(@config["virustotal"]["api-key"], result['resource'])
-						end
-					
-						return [result['resource'], results]
-					elsif result['response_code']	== -2
-						STDERR.puts "[!] Virustotal limits exceeded, ***do not edit the timeout values.***" 
-						exit(1)
-					else
-						nil
-					end	
-				rescue => e					
-					STDERR.puts "[!] An error has occurred retrieving the report. Retrying 60 seconds up #{retries} retries.\n" if  @options["verbose"]
+							[result['resource'], results]
+							#return [result['resource'], results]
+
+						elsif result['response_code'] == 0 and @options['rescan']
+							STDERR.puts "[!] Unknown Virustotal error for rescan of #{result['resource']}." if @options['verbose']
+							next
+
+						elsif result['response_code'] == -1 and @options['rescan']
+							STDERR.puts "[!] Virustotal does not have a sample of #{result['resource']}." if @options['verbose']
+							next
+
+						elsif result['response_code'] == -2
+							STDERR.puts "[!] Virustotal limits exceeded, ***do not edit the timeout values.***" 
+							exit(1)
+						else
+							nil
+						end	
+					end
+				rescue => e
+					STDERR.puts "[!] An error has occurred retrieving the report. Retrying 60 seconds up #{retries} retries. #{e.message}\n" if  @options['verbose']
 					if retries >= 0
 						sleep 60
 						retry
@@ -227,6 +262,8 @@ module Uirusu
 				
 				if @options['output'] == :stdout
 					output_method = :to_stdout
+				elsif @options['output'] == :json
+					output_method = :to_json
 				elsif @options['output'] == :yaml
 					output_method = :to_yaml
 				elsif @options['output'] == :xml
@@ -242,16 +279,21 @@ module Uirusu
 					@files_of_hashes.each do |file|
 						f = File.open(file, 'r')
 
-					  f.each do |hash|
-					  	hash.chomp!
-					    @hashes.push hash
-					  end
+						f.each do |hash|
+							hash.chomp!
+							@hashes.push hash
+						end
 					end
 				end		
 
 				if @hashes != nil
 					@hashes.each_with_index do |hash, index|
-						results = Uirusu::VTFile.query_report(@config["virustotal"]["api-key"], hash)
+						if @options['rescan']
+							results = scan_and_wait(Uirusu::VTFile, hash, 5)
+						else
+							results = Uirusu::VTFile.query_report(@config['virustotal']['api-key'], hash)
+						end
+
 						result = Uirusu::VTResult.new(hash, results)
 						print result.send output_method if result != nil
 						sleep @options[:timeout] if index != @hashes.length - 1
@@ -283,3 +325,4 @@ module Uirusu
 		end
 	end
 end
+
