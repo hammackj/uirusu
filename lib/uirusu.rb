@@ -28,8 +28,9 @@
 
 module Uirusu
 	APP_NAME = "uirusu"
-	VERSION = "0.0.4"
+	VERSION = "0.0.5"
 	CONFIG_FILE = "~/.uirusu"
+	VT_API = "https://www.virustotal.com/vtapi/v2"
 end
 
 require 'json'
