@@ -15,7 +15,7 @@
 # may be used to endorse or promote products derived from this software
 # without specific prior written permission.
 #
-# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS 'AS IS' AND
 # ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
 # WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
 # DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY
@@ -31,8 +31,9 @@ module Uirusu
 	# Module for Accessing the File scan and report functionalities of the
 	# Virustotal.com public API
 	module VTFile
-		SCAN_URL = "http://www.virustotal.com/vtapi/v2/file/scan"
-		REPORT_URL = "https://www.virustotal.com/vtapi/v2/file/report"
+		SCAN_URL   = Uirusu::VT_API + "/file/scan"
+		RESCAN_URL = Uirusu::VT_API + "/file/rescan"
+		REPORT_URL = Uirusu::VT_API + "/file/report"
 
 		# Queries a report from Virustotal.com
 		#
@@ -60,6 +61,8 @@ module Uirusu
 					JSON.parse(response)
 				when 500
 					nil
+				else
+					raise "Unknown Server error."
 			end
 		end
 
@@ -87,6 +90,37 @@ module Uirusu
 					raise "Invalid privileges, please check your API key."
 				when 200
 					JSON.parse(response)
+				else
+					raise "Unknown Server error."
+			end
+		end
+
+		# Requests an existing file to be rescanned.
+		#
+		# @param api_key Virustotal.com API key
+		# @param resource MD5/sha1/sha256/scan_id to rescan
+		#
+		# @return [JSON] Parsed response
+		def self.rescan_file(api_key, resource)
+			if api_key == nil
+				raise "Invalid API Key"
+			end
+
+			if resource == nil
+				raise "Invalid resource, must be md5/sha1/sha256/scan_id"
+			end
+
+			response = RestClient.post RESCAN_URL, :apikey => api_key, :resource => resource
+
+			case response.code
+				when 429
+					raise "Virustotal limit reached. Try again later."
+				when 403
+					raise "Invalid privileges, please check your API key."
+				when 200
+					JSON.parse(response)
+				when 500
+					nil
 				else
 					raise "Unknown Server error."
 			end

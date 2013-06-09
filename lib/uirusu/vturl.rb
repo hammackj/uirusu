@@ -30,8 +30,8 @@ module Uirusu
 	#
 	#
 	module VTUrl
-		SCAN_URL = "https://www.virustotal.com/vtapi/v2/url/scan"
-		REPORT_URL = "http://www.virustotal.com/vtapi/v2/url/report"
+		SCAN_URL   = Uirusu::VT_API + "/url/scan"
+		REPORT_URL = Uirusu::VT_API + "/url/report"
 
 		# Submits a URL to be scanned by Virustotal.com
 		#
@@ -92,3 +92,4 @@ module Uirusu
 		end
 	end
 end
+
