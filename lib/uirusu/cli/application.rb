@@ -268,7 +268,6 @@ module Uirusu
 					output_method = :to_yaml
 				elsif @options['output'] == :xml
 					output_method = :to_xml
-					print "<results>\n"
 				end
 
 				if @options['proxy'] != nil
@@ -316,10 +315,6 @@ module Uirusu
 						print result.send output_method if result != nil
 						sleep @options[:timeout] if index != @uploads.length - 1
 					end
-				end
-
-				if @options['output'] == :xml
-					print "</results>\n"
 				end
 			end
 		end
