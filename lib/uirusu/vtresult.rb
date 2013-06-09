@@ -133,6 +133,7 @@ module Uirusu
 		#
 		def to_xml
 			result_string = String.new
+			result_string << "<results>\n"
 			@results.each do |result|
 				result_string << "\t<vtresult>\n"
 				RESULT_FIELDS.each{|field|
@@ -140,6 +141,7 @@ module Uirusu
 				}
 				result_string << "\t</vtresult>\n"
 			end if @results != nil
+			result_string << "</results>\n"
 
 			result_string
 		end
