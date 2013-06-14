@@ -34,11 +34,11 @@ require 'rake'
 require 'rake/testtask'
 
 task :build do
-  system "gem build #{Uirusu::APP_NAME}.gemspec"
+	system "gem build #{Uirusu::APP_NAME}.gemspec"
 end
 
 task :release => :build do
-  system "gem push #{Uirusu::APP_NAME}-#{Uirusu::VERSION}.gem"
+	system "gem push #{Uirusu::APP_NAME}-#{Uirusu::VERSION}.gem"
 	puts "Just released #{Uirusu::APP_NAME} v#{Uirusu::VERSION}. #{Uirusu::APP_NAME} is rubygem for using the Virustotal web service! More information at http://arxopia.com/projects/uirusu/"
 end
 
@@ -51,6 +51,6 @@ task :default => [:test]
 
 Rake::TestTask.new("test") do |t|
 	t.libs << "test"
-  t.pattern = 'test/*/*_test.rb'
-  t.verbose = true
+	t.pattern = 'test/*/*_test.rb'
+	t.verbose = true
 end
