@@ -1,5 +1,9 @@
 # News
 
+# 0.0.5 (June 14, 2013)
+- Merged Pull request from [jfx41]
+- Lots of cleanup from jfx41
+
 # 0.0.4 (April 11, 2013)
 - Added Proxy support [abenson]
 - Copyright date updates
