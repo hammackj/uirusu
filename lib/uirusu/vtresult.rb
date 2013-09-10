@@ -102,8 +102,9 @@ module Uirusu
 			end
 		end
 
+		# Outputs the result to STDOUT
 		#
-		#
+		# @return [String] Pretty text printable representation of the result
 		def to_stdout
 			result_string = String.new
 			hashes = Array.new
@@ -119,20 +120,23 @@ module Uirusu
 			result_string
 		end
 
+		# Outputs the result to JSON
 		#
-		#
+		# @return [String] JSON representation of the result
 		def to_json
 			JSON::pretty_generate(@results.map{|entry| { :vtresult => entry } })
 		end
 
+		# Outputs the result to YAML
 		#
-		#
+		# @return [String] YAML representation of the result
 		def to_yaml
 			@results.map{|entry| { :vtresult => entry } }.to_yaml
 		end
 
+		# Outputs the result to XML
 		#
-		#
+		# @return [String] XML representation of the result
 		def to_xml
 			result_string = String.new
 			result_string << "<results>\n"
