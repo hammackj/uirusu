@@ -37,7 +37,15 @@ task :build do
 	system "gem build #{Uirusu::APP_NAME}.gemspec"
 end
 
-task :release => :build do
+task :tag_and_bag do
+	system "git tag -a v#{Uirusu::VERSION} -m 'version #{Uirusu::VERSION}'"
+	system "git push --tags"
+	system "git checkout master"
+	system "git merge #{Uirusu::VERSION}"
+	system "git push"
+end
+
+task :release => [:tag_and_bag, :build] do
 	system "gem push #{Uirusu::APP_NAME}-#{Uirusu::VERSION}.gem"
 	puts "Just released #{Uirusu::APP_NAME} v#{Uirusu::VERSION}. #{Uirusu::APP_NAME} is rubygem for using the Virustotal web service! More information at http://arxopia.com/projects/uirusu/"
 end
