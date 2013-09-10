@@ -1,5 +1,11 @@
 # News
 
+# 0.0.6 (September)
+- Added support for hashing a directory and submitting it to the hash scan[request from myne-us]
+	- -d DIRECTORY will invoke this, all files will be hashed and submitted to the hash array to be hashed
+- Minor tweaks
+	- Fixed the lack of a hash on 'file not found' results
+
 # 0.0.5 (June 14, 2013)
 - Merged Pull request from [jfx41]
 - Lots of cleanup from jfx41
