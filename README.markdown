@@ -2,7 +2,7 @@
 
 uirusu is an [Virustotal](http://www.virustotal.com) automation and convenience tool for hash, file and URL submission.
 
-The current version is 0.0.4.
+The current version is 0.0.6.
 
 ## Requirements
 
@@ -16,6 +16,15 @@ The current version is 0.0.4.
 
 	% gem install uirusu
 	% uirusu [options]
+
+## Setup
+Setup is fairly easy:
+
+### Create your config
+	% uirusu --create-config
+
+### Edit your config with API key
+	% $EDITOR ~/.uirusu
 
 ## Usage
 
@@ -39,6 +48,8 @@ The current version is 0.0.4.
 ### Saving results to a file
 	% uirusu -s "http://www.google.com" --yaml-output > file.yaml
 
+### Scan a directory and have them searched and save the results as json
+	% uirusu -d /bin/ --json-output > file.json
 
 ## API Usage
 ```ruby
