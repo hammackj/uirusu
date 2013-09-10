@@ -28,10 +28,10 @@
 
 module Uirusu
 	APP_NAME = "uirusu"
-	VERSION = "0.0.5"
-	CONFIG_FILE = "~/.uirusu"
+	VERSION = "0.0.6"
+	CONFIG_FILE = Dir.home + "/.uirusu"
 	VT_API = "https://www.virustotal.com/vtapi/v2"
-	RESULT_FIELDS = [ :hash, :scanner, :version, :detected, :result, :md5, :sha1, :sha256, :update, :permalink, ]
+	RESULT_FIELDS = [ :hash, :scanner, :version, :detected, :result, :md5, :sha1, :sha256, :update, :permalink]
 end
 
 require 'json'
@@ -43,4 +43,5 @@ require 'uirusu/vtfile'
 require 'uirusu/vturl'
 require 'uirusu/vtcomment'
 require 'uirusu/vtresult'
+require 'uirusu/scanner'
 require 'uirusu/cli/application'
