@@ -53,6 +53,7 @@ module Uirusu
 				if result['response_code'] == 0
 					res = Hash.new
 					RESULT_FIELDS.each{|field| res[field] = '-' }
+					res[:hash] = hash
 					res['result'] = result['verbose_msg']
 					@results.push res
 
@@ -64,7 +65,7 @@ module Uirusu
 					md5 = result['md5']
 					sha1 = result['sha1']
 					sha256 = result['sha256']
-	
+
 					result['scans'].each do |scanner, value|
 						if value != ''
 							res = Hash.new
@@ -75,16 +76,16 @@ module Uirusu
 							res[:scanner] = scanner
 							res[:detected] = value['detected']
 							res[:version] = value['version']
-	
+
 							if value['result'] == nil
 								res[:result] = "Nothing detected"
 							else
 								res[:result] = value['result']
 							end
-	
+
 							res[:update] = value['update']
 							res[:permalink] = permalink unless permalink == nil
-	
+
 							@results.push res
 						end
 					end
@@ -95,6 +96,7 @@ module Uirusu
 			if @results.size == 0
 				res = Hash.new
 				RESULT_FIELDS.each{|field| res[field] = '-' }
+				res[:hash] = hash
 				res['result'] = result['verbose_msg']
 				@results.push res
 			end
