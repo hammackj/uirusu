@@ -6,10 +6,9 @@ The current version is 0.0.6.
 
 ## Requirements
 
-* ruby
+* ruby 1.9+
 * json
 * rest-client
-
 * **public api key from [virustotal.com](http://www.virustotal.com)**
 
 ## Installation
@@ -17,13 +16,12 @@ The current version is 0.0.6.
 	% gem install uirusu
 	% uirusu [options]
 
-## Setup
-Setup is fairly easy:
+## Setup is fairly easy
 
-### Create your config
+### Create your configuration file
 	% uirusu --create-config
 
-### Edit your config with API key
+### Edit your configuration file with API key
 	% $EDITOR ~/.uirusu
 
 ## Usage
