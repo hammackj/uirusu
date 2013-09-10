@@ -50,6 +50,7 @@ module Uirusu
 					@options['verbose'] = false
 					@options['rescan']  = false
 					@options[:timeout]  = 25
+					@options[:directory] = nil
 
 					opt = OptionParser.new do |opt|
 						opt.banner = "#{APP_NAME} v#{VERSION}\nJacob Hammack\nhttp://www.arxopia.com\n\n"
@@ -125,6 +126,10 @@ module Uirusu
 								puts "[!]  #{File.expand_path(CONFIG_FILE)} already exists. Please delete it if you wish to re-create it."
 								exit
 							end
+						end
+
+						opt.on('-d DIRECTORY', '--directory', 'Scans a directory recursively for files and submits the hashes') do |directory|
+							@options[:directory] = directory
 						end
 
 						opt.on('-p PROXY', '--proxy-server', 'Uses a specified proxy server') do |proxy|
@@ -272,6 +277,14 @@ module Uirusu
 
 				if @options['proxy'] != nil
 					RestClient.proxy = @options['proxy']
+				end
+
+				if @options[:directory] != nil
+					hashes = Uirusu::Scanner.scan(@options[:directory])
+
+					hashes.each do |hash|
+						@hashes.push hash
+					end
 				end
 
 				if @files_of_hashes != nil
