@@ -67,7 +67,7 @@ module Uirusu
 							@hashes.push(hash)
 						end
 
-						opt.on('-f FILE', '--search-hash-file FILE', 'Searches a each hash in a file of hashes on virustotal.com') do |file|
+						opt.on('-f FILE', '--search-hash-file FILE', 'Searches each hash in a file of hashes on virustotal.com') do |file|
 							if File.exists?(file)
 								puts "[+] Adding file #{file}" if @options['verbose']
 								@files_of_hashes.push(file)
