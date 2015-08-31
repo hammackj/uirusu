@@ -1,4 +1,4 @@
-# Copyright (c) 2012-2013 Arxopia LLC.
+# Copyright (c) 2012-2015 Arxopia LLC.
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -28,7 +28,7 @@
 
 module Uirusu
 	APP_NAME = "uirusu"
-	VERSION = "0.0.6"
+	VERSION = "0.0.7"
 	CONFIG_FILE = Dir.home + "/.uirusu"
 	VT_API = "https://www.virustotal.com/vtapi/v2"
 	RESULT_FIELDS = [ :hash, :scanner, :version, :detected, :result, :md5, :sha1, :sha256, :update, :permalink]
