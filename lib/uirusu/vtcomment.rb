@@ -55,7 +55,7 @@ module Uirusu
 			response = RestClient.post POST_URL, :apikey => api_key, :resource => resource, :comment => comment
 			
 			case response.code
-				when 429
+				when 429, 204
 					raise "Virustotal limit reached. Try again later."
 				when 403
 					raise "Invalid privileges, please check your API key."
