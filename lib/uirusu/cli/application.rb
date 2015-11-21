@@ -219,19 +219,17 @@ module Uirusu
 					# rescan_file returns an array of results if more than one hash
 					# is requested to be rescanned.
 					result_array = result.is_a?(Array) ? result : [ result ]
-
 					result_array.collect do |result|
 						if result['response_code'] == 1
 							STDERR.puts "[*] Attempting to parse the results for: #{result['resource']}" if @options['verbose']
 							results = mod.query_report(@config['virustotal']['api-key'], result['resource'])
-
 							while results['response_code'] != 1
 								STDERR.puts "[*] File has not been analyized yet, waiting 60 seconds to try again" if  @options['verbose']
 								sleep 60
 								results = mod.query_report(@config['virustotal']['api-key'], result['resource'])
 							end
 
-							[result['resource'], results]
+							return result['resource'], results
 							#return [result['resource'], results]
 
 						elsif result['response_code'] == 0 and @options['rescan']
@@ -333,4 +331,3 @@ module Uirusu
 		end
 	end
 end
-
