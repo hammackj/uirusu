@@ -40,7 +40,7 @@ Gem::Specification.new do |s|
 	s.license = "BSD"
 
 	s.author = "Jacob Hammack"
-	s.email = "uirusu@arxopia.com"
+	s.email = "jacob.hammack@arxopia.com"
 
 	s.files = Dir['[A-Z]*'] + Dir['lib/**/*'] + ['uirusu.gemspec']
 	s.default_executable = 'uirusu'
@@ -53,6 +53,6 @@ Gem::Specification.new do |s|
 	s.has_rdoc = 'yard'
 	s.extra_rdoc_files = ["README.markdown", "LICENSE", "NEWS.markdown", "TODO.markdown"]
 
-	s.add_dependency('json', '>= 1.5.1')
-	s.add_dependency('rest-client', '>= 1.6.1')
+	s.add_runtime_dependency 'json', '~> 1.5', '>= 1.5.1'
+	s.add_runtime_dependency 'rest-client', '~> 1.6', '>= 1.6.1'
 end
