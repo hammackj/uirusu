@@ -1,5 +1,8 @@
 # News
 
+# 0.0.9 (Novemeber 22, 2015)
+- adds empty options hash as arg to to_json override [kitplummer]
+
 # 0.0.8 (Novemeber 20, 2015)
 - remove double array bracket [kitplummer]
 
