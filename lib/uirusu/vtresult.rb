@@ -123,7 +123,7 @@ module Uirusu
 		# Outputs the result to JSON
 		#
 		# @return [String] JSON representation of the result
-		def to_json
+		def to_json(options={})
 			JSON::pretty_generate(@results.map{|entry| { :vtresult => entry } })
 		end
 
