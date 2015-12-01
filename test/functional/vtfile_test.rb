@@ -33,11 +33,11 @@ class VTFileTest < Minitest::Test
     @original_stderr = $stderr
     @original_stdout = $stdout
 
-    #$stderr = File.open(File::NULL, "w")
-    ##$stdout = File.open(File::NULL, "w")
+    $stderr = File.open(File::NULL, "w")
+    $stdout = File.open(File::NULL, "w")
 
 		@app_test = Uirusu::CLI::Application.new
-    @app_test.load_config
+    @app_test.load_config if File.exists?(Uirusu::CONFIG_FILE)
 	end
 
   # Restore STDOUT/STDERR after each test
