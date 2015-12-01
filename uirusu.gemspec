@@ -34,7 +34,7 @@ require 'uirusu'
 Gem::Specification.new do |s|
 	s.name = Uirusu::APP_NAME
 	s.version = Uirusu::VERSION
-	s.homepage = "http://github.com/arxopia/uirusu/"
+	s.homepage = Uirusu::HOME_PAGE
 	s.summary = Uirusu::APP_NAME
 	s.description = "uirusu is library for interacting with Virustotal.org"
 	s.license = "BSD"
@@ -53,6 +53,6 @@ Gem::Specification.new do |s|
 	s.has_rdoc = 'yard'
 	s.extra_rdoc_files = ["README.markdown", "LICENSE", "NEWS.markdown", "TODO.markdown"]
 
-	s.add_dependency('json', '>= 1.5.1')
-	s.add_dependency('rest-client', '>= 1.6.1')
+	s.add_dependency('json', '>= 1.8.3')
+	s.add_dependency('rest-client', '>= 1.6.9')
 end
