@@ -26,7 +26,7 @@
 
 require 'test_helper'
 
-class Application < Minitest::Test
+class ApplicationTest < Minitest::Test
 
   # Runs before each test, silences STDOUT/STDERR during the test
 	def setup
