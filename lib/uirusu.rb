@@ -26,7 +26,7 @@
 
 module Uirusu
 	APP_NAME = "uirusu"
-	VERSION = "0.0.11"
+	VERSION = "1.0.0"
 	HOME_PAGE = "http://arxopia.github.io/uirusu"
 	AUTHOR = "Jacob Hammack"
 	EMAIL = "uirusu@arxopia.com"

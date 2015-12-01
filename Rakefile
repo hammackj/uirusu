@@ -46,7 +46,6 @@ task :push => [:build] do
 	system "gem push #{Uirusu::APP_NAME}-#{Uirusu::VERSION}.gem"
 end
 
-
 task :release => [:tag_and_bag, :push] do
 	puts "Just released #{Uirusu::APP_NAME} v#{Uirusu::VERSION}. #{Uirusu::APP_NAME} is rubygem for using the Virustotal web service! More information at #{Uirusu::HOME_PAGE}"
 end

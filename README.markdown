@@ -2,7 +2,7 @@
 
 uirusu is an [Virustotal](http://www.virustotal.com) automation and convenience tool for hash, file and URL submission.
 
-The current version is 0.0.10.
+The current version is 1.0.0.
 
 ## Requirements
 
@@ -50,7 +50,6 @@ The current version is 0.0.10.
 ## API Usage
 ```ruby
 #First you need to include the correct require files
-require 'rubygems'
 require 'uirusu'
 
 API_KEY = "YOUR API KEY HERE"
