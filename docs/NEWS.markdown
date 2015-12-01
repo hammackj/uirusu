@@ -1,7 +1,10 @@
 # News
 
 # 0.0.10 (December XX, 2016)
-- Initial work on adding unit tests
+- Added accessor for Results in the VTResults class
+- Added test for VTFile
+- Added test for Application class
+- Updated docs on some of the classes
 
 # 0.0.9 (Novemeber 22, 2015)
 - Adds empty options hash as arg to to_json override [kitplummer]
