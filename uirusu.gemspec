@@ -37,16 +37,15 @@ Gem::Specification.new do |s|
 	s.description = "uirusu is library for interacting with Virustotal.org"
 	s.license = "BSD"
 
-	s.author = "Jacob Hammack"
-	s.email = "uirusu@arxopia.com"
+	s.author = Uirusu::AUTHOR
+	s.email = Uirusu::EMAIL
 
 	s.files = Dir['[A-Z]*'] + Dir['lib/**/*'] + ['uirusu.gemspec']
 	s.default_executable = 'uirusu'
 	s.executables = ['uirusu']
 	s.require_paths	= ["lib"]
 
-	s.required_ruby_version = '>= 1.9.3'
-	s.required_rubygems_version = ">= 1.8.16"
+	s.required_ruby_version = '>= 2.0.0'
 
 	s.has_rdoc = 'yard'
 	s.extra_rdoc_files = ["README.markdown", "LICENSE", "docs/NEWS.markdown", "docs/TODO.markdown"]
