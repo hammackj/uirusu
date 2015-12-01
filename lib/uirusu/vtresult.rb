@@ -30,6 +30,8 @@ module Uirusu
 	class VTResult
 		RESULT_FIELDS = Uirusu::RESULT_FIELDS
 
+		attr_accessor :results
+
 		# Builds a VTResult object based on the hash and results passed to it
 		#
 		# @param hash, Cryptographic hash that was searched
