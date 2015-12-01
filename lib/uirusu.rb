@@ -27,7 +27,10 @@
 module Uirusu
 	APP_NAME = "uirusu"
 	VERSION = "0.0.10"
-	HOME_PAGE = "https://github.com/arxopia/uirusu"
+	HOME_PAGE = "http://arxopia.github.io/uirusu"
+	AUTHOR = "Jacob Hammack"
+	EMAIL = "uirusu@arxopia.com"
+
 	CONFIG_FILE = Dir.home + "/.uirusu"
 	VT_API = "https://www.virustotal.com/vtapi/v2"
 	RESULT_FIELDS = [ :hash, :scanner, :version, :detected, :result, :md5, :sha1, :sha256, :update, :permalink ]
