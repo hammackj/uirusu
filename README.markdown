@@ -1,12 +1,12 @@
-# uirusu
+# uirusu [![Build Status](https://travis-ci.org/arxopia/uirusu.svg)](https://travis-ci.org/arxopia/uirusu)
 
 uirusu is an [Virustotal](http://www.virustotal.com) automation and convenience tool for hash, file and URL submission.
 
-The current version is 0.0.9.
+The current version is 0.0.10.
 
 ## Requirements
 
-* ruby 1.9+
+* ruby 2.0+
 * json
 * rest-client
 * **public api key from [virustotal.com](http://www.virustotal.com)**
