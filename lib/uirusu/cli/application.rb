@@ -30,6 +30,8 @@ module Uirusu
 	module CLI
 		class Application
 
+			attr_accessor :config
+
 			# Creates a new instance of the [Application] class
 			#
 			def initialize
@@ -53,7 +55,7 @@ module Uirusu
 					@options[:directory] = nil
 
 					opt = OptionParser.new do |opt|
-						opt.banner = "#{APP_NAME} v#{VERSION}\nJacob Hammack\nhttp://www.arxopia.com\n\n"
+						opt.banner = "#{APP_NAME} v#{VERSION}\nJacob Hammack\n#{HOME_PAGE}\n\n"
 						opt.banner << "Usage: #{APP_NAME} <options>"
 						opt.separator('')
 						opt.separator('File Options')
@@ -115,17 +117,8 @@ module Uirusu
 						opt.separator 'Advanced Options'
 
 						opt.on('-c', '--create-config', 'Creates a skeleton config file to use') do
-							if File.exists?(File.expand_path(CONFIG_FILE)) == false
-								File.open(File.expand_path(CONFIG_FILE), 'w+') do |f|
-									f.write("virustotal: \n  api-key: \n  timeout: 25\n\n")
-								end
-
-								puts "[*] An empty #{File.expand_path(CONFIG_FILE)} has been created. Please edit and fill in the correct values."
-								exit
-							else
-								puts "[!]  #{File.expand_path(CONFIG_FILE)} already exists. Please delete it if you wish to re-create it."
-								exit
-							end
+							create_config
+							exit
 						end
 
 						opt.on('-d DIRECTORY', '--directory', 'Scans a directory recursively for files and submits the hashes') do |directory|
@@ -166,11 +159,28 @@ module Uirusu
 				end
 			end
 
+			# Create config skeleton
+			#
+			def create_config (file=CONFIG_FILE)
+				f = File.expand_path(file)
+
+				if File.exists?(f) == false
+					File.open(f, 'w+') do |f|
+						f.write("virustotal: \n  api-key: \n  timeout: 25\n\n")
+					end
+					puts "[*] An empty #{f} has been created. Please edit and fill in the correct values."
+				else
+					puts "[!]  #{f} already exists. Please delete it if you wish to re-create it."
+				end
+			end
+
 			# Loads the .uirusu config file for the api key
 			#
-			def load_config
-				if File.exists?(File.expand_path(CONFIG_FILE))
-					@config = YAML.load_file File.expand_path(CONFIG_FILE)
+			def load_config (file=CONFIG_FILE)
+				f = File.expand_path(file)
+
+				if File.exists?(f)
+					@config = YAML.load_file f
 				else
 					STDERR.puts "[!] #{CONFIG_FILE} does not exist. Please run #{APP_NAME} --create-config, to create it."
 					exit
