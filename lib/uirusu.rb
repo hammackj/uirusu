@@ -28,10 +28,11 @@
 
 module Uirusu
 	APP_NAME = "uirusu"
-	VERSION = "0.0.9"
+	VERSION = "0.0.10"
+	HOME_PAGE = "https://github.com/arxopia/uirusu"
 	CONFIG_FILE = Dir.home + "/.uirusu"
 	VT_API = "https://www.virustotal.com/vtapi/v2"
-	RESULT_FIELDS = [ :hash, :scanner, :version, :detected, :result, :md5, :sha1, :sha256, :update, :permalink]
+	RESULT_FIELDS = [ :hash, :scanner, :version, :detected, :result, :md5, :sha1, :sha256, :update, :permalink ]
 end
 
 require 'json'
