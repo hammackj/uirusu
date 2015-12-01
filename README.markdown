@@ -53,24 +53,24 @@ The current version is 0.0.10.
 require 'rubygems'
 require 'uirusu'
 
-APT_KEY = "YOUR API KEY HERE"
+API_KEY = "YOUR API KEY HERE"
 
 hash = "FD287794107630FA3116800E617466A9" #Hash for a version of Poison Ivy
 url = "http://www.google.com"
 comment = "Hey this is Poison Ivy, anyone have a copy of this binary?"
 
 #To query a hash(sha1/sha256/md5)
-results = Uirusu::VTFile.query_report(APT_KEY, hash)
+results = Uirusu::VTFile.query_report(API_KEY, hash)
 result = Uirusu::VTResult.new(hash, results)
 print result.to_stdout if result != nil
 
 #To scan for a url
-results = Uirusu::VTUrl.query_report(APT_KEY, url)
+results = Uirusu::VTUrl.query_report(API_KEY, url)
 result = Uirusu::VTResult.new(url, results)
 print result.to_stdout if result != nil
 
 #To post a comment to a resource(url/hash/scan_id)
-results = Uirusu::VTComment.post_comment(APT_KEY, hash, comment)
+results = Uirusu::VTComment.post_comment(API_KEY, hash, comment)
 print results if results != nil
 ```
 
