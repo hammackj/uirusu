@@ -1,7 +1,17 @@
 # News
 
+# 0.0.10 (Novemeber 30, 2016)
+- Added accessor for Results in the VTResults class
+- Added initial test for VTFile
+- Added initial test for VTUrl
+- Added initial test for Application class
+- Updated docs on various classes
+
+# 0.0.9 (Novemeber 22, 2015)
+- Adds empty options hash as arg to to_json override [kitplummer]
+
 # 0.0.8 (Novemeber 20, 2015)
-- remove double array bracket [kitplummer]
+- Remove double array bracket [kitplummer]
 
 # 0.0.7 (August 31, 2015)
 - Accept HTTP response code 204 as limit-reached code [JasonPoll]

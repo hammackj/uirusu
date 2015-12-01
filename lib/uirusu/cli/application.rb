@@ -1,34 +1,34 @@
-# Copyright (c) 2012-2015 Arxopia LLC.
+# Copyright (c) 2012-2016 Arxopia LLC.
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are met:
 #
-# Redistributions of source code must retain the above copyright notice,
-# this list of conditions and the following disclaimer.
-#
-# Redistributions in binary form must reproduce the above copyright notice,
-# this list of conditions and the following disclaimer in the documentation
-# and/or other materials provided with the distribution.
-#
-# Neither the name of the project's author nor the names of its contributors
-# may be used to endorse or promote products derived from this software
-# without specific prior written permission.
+#     * Redistributions of source code must retain the above copyright
+#       notice, this list of conditions and the following disclaimer.
+#     * Redistributions in binary form must reproduce the above copyright
+#       notice, this list of conditions and the following disclaimer in the
+#       documentation and/or other materials provided with the distribution.
+#     * Neither the name of the Arxopia LLC nor the names of its contributors
+#     	may be used to endorse or promote products derived from this software
+#     	without specific prior written permission.
 #
 # THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
 # ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
 # WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-# DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY
-# DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-# (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-# LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
-# ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-# SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+# DISCLAIMED. IN NO EVENT SHALL ARXOPIA LLC BE LIABLE FOR ANY DIRECT, INDIRECT,
+# INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+# LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA,
+# OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+# LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
+# OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
+# OF THE POSSIBILITY OF SUCH DAMAGE.
 
 module Uirusu
 	module CLI
 		class Application
+
+			attr_accessor :config
 
 			# Creates a new instance of the [Application] class
 			#
@@ -53,7 +53,7 @@ module Uirusu
 					@options[:directory] = nil
 
 					opt = OptionParser.new do |opt|
-						opt.banner = "#{APP_NAME} v#{VERSION}\nJacob Hammack\nhttp://www.arxopia.com\n\n"
+						opt.banner = "#{APP_NAME} v#{VERSION}\nJacob Hammack\n#{HOME_PAGE}\n\n"
 						opt.banner << "Usage: #{APP_NAME} <options>"
 						opt.separator('')
 						opt.separator('File Options')
@@ -115,17 +115,8 @@ module Uirusu
 						opt.separator 'Advanced Options'
 
 						opt.on('-c', '--create-config', 'Creates a skeleton config file to use') do
-							if File.exists?(File.expand_path(CONFIG_FILE)) == false
-								File.open(File.expand_path(CONFIG_FILE), 'w+') do |f|
-									f.write("virustotal: \n  api-key: \n  timeout: 25\n\n")
-								end
-
-								puts "[*] An empty #{File.expand_path(CONFIG_FILE)} has been created. Please edit and fill in the correct values."
-								exit
-							else
-								puts "[!]  #{File.expand_path(CONFIG_FILE)} already exists. Please delete it if you wish to re-create it."
-								exit
-							end
+							create_config
+							exit
 						end
 
 						opt.on('-d DIRECTORY', '--directory', 'Scans a directory recursively for files and submits the hashes') do |directory|
@@ -166,11 +157,28 @@ module Uirusu
 				end
 			end
 
+			# Create config skeleton
+			#
+			def create_config (file=CONFIG_FILE)
+				f = File.expand_path(file)
+
+				if File.exists?(f) == false
+					File.open(f, 'w+') do |f|
+						f.write("virustotal: \n  api-key: \n  timeout: 25\n\n")
+					end
+					puts "[*] An empty #{f} has been created. Please edit and fill in the correct values."
+				else
+					puts "[!]  #{f} already exists. Please delete it if you wish to re-create it."
+				end
+			end
+
 			# Loads the .uirusu config file for the api key
 			#
-			def load_config
-				if File.exists?(File.expand_path(CONFIG_FILE))
-					@config = YAML.load_file File.expand_path(CONFIG_FILE)
+			def load_config (file=CONFIG_FILE)
+				f = File.expand_path(file)
+
+				if File.exists?(f)
+					@config = YAML.load_file f
 				else
 					STDERR.puts "[!] #{CONFIG_FILE} does not exist. Please run #{APP_NAME} --create-config, to create it."
 					exit

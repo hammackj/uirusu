@@ -1,5 +1,3 @@
-#!/usr/bin/env ruby
-
 # Copyright (c) 2012-2016 Arxopia LLC.
 # All rights reserved.
 #
@@ -26,10 +24,49 @@
 # OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
 # OF THE POSSIBILITY OF SUCH DAMAGE.
 
-$LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '/../lib'))
+require 'test_helper'
 
-require 'rubygems'
-require 'uirusu'
+class ApplicationTest < Minitest::Test
 
-app = Uirusu::CLI::Application.new
-app.main(ARGV)
+  # Runs before each test, silences STDOUT/STDERR during the test
+	def setup
+    @original_stderr = $stderr
+    @original_stdout = $stdout
+
+    $stderr = File.open(File::NULL, "w")
+    $stdout = File.open(File::NULL, "w")
+
+		@app_test = Uirusu::CLI::Application.new
+	end
+
+  # Restore STDOUT/STDERR after each test
+  def teardown
+    $stderr = @original_stderr
+    $stdout = @original_stdout
+  end
+
+  def test_should_create_a_config_file_for_Application_create_config
+		file_name = "/tmp/" + (1...25).map{65.+(rand(25)).chr}.join
+		@app_test.create_config(file_name)
+		sleep(1)
+		result = File.exist?(file_name)
+		File.delete(file_name) if result
+		assert true, result
+	end
+
+  def test_should_have_nill_api_key_on_Application_load_config
+    file_name = "/tmp/" + (1...25).map{65.+(rand(25)).chr}.join
+    @app_test.create_config(file_name)
+    sleep(1)
+    @app_test.load_config(file_name)
+    assert_nil nil, @app_test.config['virustotal']['api-key']
+  end
+
+  def test_should_have_25_timeout_on_Application_load_config
+    file_name = "/tmp/" + (1...25).map{65.+(rand(25)).chr}.join
+    @app_test.create_config(file_name)
+    sleep(1)
+    @app_test.load_config(file_name)
+    assert_equal 25, @app_test.config['virustotal']['timeout']
+  end
+end

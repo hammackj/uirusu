@@ -1,12 +1,12 @@
-# uirusu
+# uirusu [![Build Status](https://travis-ci.org/arxopia/uirusu.svg)](https://travis-ci.org/arxopia/uirusu)
 
 uirusu is an [Virustotal](http://www.virustotal.com) automation and convenience tool for hash, file and URL submission.
 
-The current version is 0.0.8.
+The current version is 0.0.10.
 
 ## Requirements
 
-* ruby 1.9+
+* ruby 2.0+
 * json
 * rest-client
 * **public api key from [virustotal.com](http://www.virustotal.com)**
@@ -15,8 +15,6 @@ The current version is 0.0.8.
 
 	% gem install uirusu
 	% uirusu [options]
-
-## Setup is fairly easy
 
 ### Create your configuration file
 	% uirusu --create-config
@@ -55,30 +53,29 @@ The current version is 0.0.8.
 require 'rubygems'
 require 'uirusu'
 
-APT_KEY = "YOUR API KEY HERE"
+API_KEY = "YOUR API KEY HERE"
 
 hash = "FD287794107630FA3116800E617466A9" #Hash for a version of Poison Ivy
 url = "http://www.google.com"
 comment = "Hey this is Poison Ivy, anyone have a copy of this binary?"
 
 #To query a hash(sha1/sha256/md5)
-results = Uirusu::VTFile.query_report(APT_KEY, hash)
+results = Uirusu::VTFile.query_report(API_KEY, hash)
 result = Uirusu::VTResult.new(hash, results)
 print result.to_stdout if result != nil
 
 #To scan for a url
-results = Uirusu::VTUrl.query_report(APT_KEY, url)
+results = Uirusu::VTUrl.query_report(API_KEY, url)
 result = Uirusu::VTResult.new(url, results)
 print result.to_stdout if result != nil
 
 #To post a comment to a resource(url/hash/scan_id)
-results = Uirusu::VTComment.post_comment(APT_KEY, hash, comment)
+results = Uirusu::VTComment.post_comment(API_KEY, hash, comment)
 print results if results != nil
 ```
 
 ##License
-
 Uirusu is licensed under the BSD license see the `LICENSE` file for the full license.
 
 ## Contact
-You can reach the team at uirusu[@]arxopia[dot]com or http://www.arxopia.com
+You can reach the team at uirusu[@]arxopia[dot]com, http://www.arxopia.com, or contact hammackj on IRC @ irc.freenode.net, #risu
