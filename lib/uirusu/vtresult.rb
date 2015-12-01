@@ -30,6 +30,11 @@ module Uirusu
 	class VTResult
 		RESULT_FIELDS = Uirusu::RESULT_FIELDS
 
+		# Builds a VTResult object based on the hash and results passed to it
+		#
+		# @param hash, Cryptographic hash that was searched
+		# @param results, Results of the search on Virustotal.com
+		#
 		def initialize hash, results
 			if results == nil or results.empty?
 				return
