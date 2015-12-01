@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Uirusu by arxopia</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Uirusu</h1>
+      <h2 class="project-tagline">A rubygem for interacting with Virustotal.com&#39;s public API v2</h2>
+      <a href="https://github.com/arxopia/uirusu" class="btn">View on GitHub</a>
+      <a href="https://github.com/arxopia/uirusu/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/arxopia/uirusu/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <h1>
+<a id="uirusu" class="anchor" href="#uirusu" aria-hidden="true"><span class="octicon octicon-link"></span></a>uirusu</h1>
+
+<p>uirusu is an <a href="http://www.virustotal.com">Virustotal</a> automation and convenience tool for hash, file and URL submission.</p>
+
+<p>The current version is 0.0.8.</p>
+
+<h2>
+<a id="requirements" class="anchor" href="#requirements" aria-hidden="true"><span class="octicon octicon-link"></span></a>Requirements</h2>
+
+<ul>
+<li>ruby 1.9+</li>
+<li>json</li>
+<li>rest-client</li>
+<li><strong>public api key from <a href="http://www.virustotal.com">virustotal.com</a></strong></li>
+</ul>
+
+<h2>
+<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation</h2>
+
+<pre><code>% gem install uirusu
+% uirusu [options]
+</code></pre>
+
+<h2>
+<a id="setup-is-fairly-easy" class="anchor" href="#setup-is-fairly-easy" aria-hidden="true"><span class="octicon octicon-link"></span></a>Setup is fairly easy</h2>
+
+<h3>
+<a id="create-your-configuration-file" class="anchor" href="#create-your-configuration-file" aria-hidden="true"><span class="octicon octicon-link"></span></a>Create your configuration file</h3>
+
+<pre><code>% uirusu --create-config
+</code></pre>
+
+<h3>
+<a id="edit-your-configuration-file-with-api-key" class="anchor" href="#edit-your-configuration-file-with-api-key" aria-hidden="true"><span class="octicon octicon-link"></span></a>Edit your configuration file with API key</h3>
+
+<pre><code>% $EDITOR ~/.uirusu
+</code></pre>
+
+<h2>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h2>
+
+<h3>
+<a id="searching-a-file-of-hashes" class="anchor" href="#searching-a-file-of-hashes" aria-hidden="true"><span class="octicon octicon-link"></span></a>Searching a file of hashes</h3>
+
+<pre><code>% uirusu -f &lt;file_with_hashes_one_per_line&gt;
+</code></pre>
+
+<h3>
+<a id="searching-a-single-hash" class="anchor" href="#searching-a-single-hash" aria-hidden="true"><span class="octicon octicon-link"></span></a>Searching a single hash</h3>
+
+<pre><code>% uirusu -h FD287794107630FA3116800E617466A9
+</code></pre>
+
+<h3>
+<a id="searching-a-file-of-hashes-and-outputting-to-xml" class="anchor" href="#searching-a-file-of-hashes-and-outputting-to-xml" aria-hidden="true"><span class="octicon octicon-link"></span></a>Searching a file of hashes and outputting to XML</h3>
+
+<pre><code>% uirusu -f &lt;file_with_hashes_one_per_line&gt; -x
+</code></pre>
+
+<h3>
+<a id="upload-a-file-to-virustotal-and-wait-for-analysis" class="anchor" href="#upload-a-file-to-virustotal-and-wait-for-analysis" aria-hidden="true"><span class="octicon octicon-link"></span></a>Upload a file to Virustotal and wait for analysis</h3>
+
+<pre><code>% uirusu -u &lt;/path/to/file&gt;
+</code></pre>
+
+<h3>
+<a id="search-for-a-single-url" class="anchor" href="#search-for-a-single-url" aria-hidden="true"><span class="octicon octicon-link"></span></a>Search for a single URL</h3>
+
+<pre><code>% uirusu -s "http://www.google.com"
+</code></pre>
+
+<h3>
+<a id="saving-results-to-a-file" class="anchor" href="#saving-results-to-a-file" aria-hidden="true"><span class="octicon octicon-link"></span></a>Saving results to a file</h3>
+
+<pre><code>% uirusu -s "http://www.google.com" --yaml-output &gt; file.yaml
+</code></pre>
+
+<h3>
+<a id="scan-a-directory-and-have-them-searched-and-save-the-results-as-json" class="anchor" href="#scan-a-directory-and-have-them-searched-and-save-the-results-as-json" aria-hidden="true"><span class="octicon octicon-link"></span></a>Scan a directory and have them searched and save the results as json</h3>
+
+<pre><code>% uirusu -d /bin/ --json-output &gt; file.json
+</code></pre>
+
+<h2>
+<a id="api-usage" class="anchor" href="#api-usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>API Usage</h2>
+
+<div class="highlight highlight-source-ruby"><pre><span class="pl-c">#First you need to include the correct require files</span>
+<span class="pl-k">require</span> <span class="pl-s"><span class="pl-pds">'</span>rubygems<span class="pl-pds">'</span></span>
+<span class="pl-k">require</span> <span class="pl-s"><span class="pl-pds">'</span>uirusu<span class="pl-pds">'</span></span>
+
+<span class="pl-c1">APT_KEY</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>YOUR API KEY HERE<span class="pl-pds">"</span></span>
+
+hash <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>FD287794107630FA3116800E617466A9<span class="pl-pds">"</span></span> <span class="pl-c">#Hash for a version of Poison Ivy</span>
+url <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>http://www.google.com<span class="pl-pds">"</span></span>
+comment <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>Hey this is Poison Ivy, anyone have a copy of this binary?<span class="pl-pds">"</span></span>
+
+<span class="pl-c">#To query a hash(sha1/sha256/md5)</span>
+results <span class="pl-k">=</span> <span class="pl-c1">Uirusu</span>::<span class="pl-c1">VTFile</span>.query_report(<span class="pl-c1">APT_KEY</span>, hash)
+result <span class="pl-k">=</span> <span class="pl-c1">Uirusu</span>::<span class="pl-c1">VTResult</span>.<span class="pl-k">new</span>(hash, results)
+print result.to_stdout <span class="pl-k">if</span> result <span class="pl-k">!=</span> <span class="pl-c1">nil</span>
+
+<span class="pl-c">#To scan for a url</span>
+results <span class="pl-k">=</span> <span class="pl-c1">Uirusu</span>::<span class="pl-c1">VTUrl</span>.query_report(<span class="pl-c1">APT_KEY</span>, url)
+result <span class="pl-k">=</span> <span class="pl-c1">Uirusu</span>::<span class="pl-c1">VTResult</span>.<span class="pl-k">new</span>(url, results)
+print result.to_stdout <span class="pl-k">if</span> result <span class="pl-k">!=</span> <span class="pl-c1">nil</span>
+
+<span class="pl-c">#To post a comment to a resource(url/hash/scan_id)</span>
+results <span class="pl-k">=</span> <span class="pl-c1">Uirusu</span>::<span class="pl-c1">VTComment</span>.post_comment(<span class="pl-c1">APT_KEY</span>, hash, comment)
+print results <span class="pl-k">if</span> results <span class="pl-k">!=</span> <span class="pl-c1">nil</span></pre></div>
+
+<h2>
+<a id="license" class="anchor" href="#license" aria-hidden="true"><span class="octicon octicon-link"></span></a>License</h2>
+
+<p>Uirusu is licensed under the BSD license see the <code>LICENSE</code> file for the full license.</p>
+
+<h2>
+<a id="contact" class="anchor" href="#contact" aria-hidden="true"><span class="octicon octicon-link"></span></a>Contact</h2>
+
+<p>You can reach the team at uirusu[@]arxopia[dot]com or <a href="http://www.arxopia.com">http://www.arxopia.com</a></p>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/arxopia/uirusu">Uirusu</a> is maintained by <a href="https://github.com/arxopia">arxopia</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
