@@ -1,10 +1,13 @@
 # News
 
+# 0.0.10 (December XX, 2016)
+- Initial work on adding unit tests
+
 # 0.0.9 (Novemeber 22, 2015)
-- adds empty options hash as arg to to_json override [kitplummer]
+- Adds empty options hash as arg to to_json override [kitplummer]
 
 # 0.0.8 (Novemeber 20, 2015)
-- remove double array bracket [kitplummer]
+- Remove double array bracket [kitplummer]
 
 # 0.0.7 (August 31, 2015)
 - Accept HTTP response code 204 as limit-reached code [JasonPoll]
