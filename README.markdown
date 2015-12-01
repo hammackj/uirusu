@@ -16,8 +16,6 @@ The current version is 0.0.10.
 	% gem install uirusu
 	% uirusu [options]
 
-## Setup is fairly easy
-
 ### Create your configuration file
 	% uirusu --create-config
 
@@ -77,8 +75,7 @@ print results if results != nil
 ```
 
 ##License
-
 Uirusu is licensed under the BSD license see the `LICENSE` file for the full license.
 
 ## Contact
-You can reach the team at uirusu[@]arxopia[dot]com or http://www.arxopia.com
+You can reach the team at uirusu[@]arxopia[dot]com, http://www.arxopia.com, or contact hammackj on IRC @ irc.freenode.net, #risu
