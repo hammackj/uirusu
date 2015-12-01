@@ -47,7 +47,8 @@ class VTFileTest < Minitest::Test
   end
 
   def test_return_XX_results_for_url_google_com
-    if @app_test.config == nil || @app_test.config['virustotal']['api-key'] == nil
+    # Skip the test if we dont have a API key
+    if @app_test.config.empty? || @app_test.config['virustotal']['api-key'] == nil
       skip
     end
 
