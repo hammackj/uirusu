@@ -49,7 +49,7 @@ Gem::Specification.new do |s|
 	s.required_rubygems_version = ">= 1.8.16"
 
 	s.has_rdoc = 'yard'
-	s.extra_rdoc_files = ["README.markdown", "LICENSE", "NEWS.markdown", "TODO.markdown"]
+	s.extra_rdoc_files = ["README.markdown", "LICENSE", "docs/NEWS.markdown", "docs/TODO.markdown"]
 
 	s.add_dependency('json', '>= 1.8.3')
 	s.add_dependency('rest-client', '>= 1.6.9')
