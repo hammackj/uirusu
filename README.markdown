@@ -77,4 +77,4 @@ print results if results != nil
 Uirusu is licensed under the BSD license see the `LICENSE` file for the full license.
 
 ## Contact
-You can reach the team at uirusu[@]arxopia[dot]com, http://www.arxopia.com, or contact hammackj on IRC @ irc.freenode.net, #risu
+You can reach the team at jacob.hammack[@]arxopia[dot]com, http://www.arxopia.com, or contact hammackj on IRC @ irc.freenode.net, #risu
