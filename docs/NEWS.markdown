@@ -1,16 +1,27 @@
 # News
 
-# 0.0.10 (Novemeber 30, 2016)
+# 1.0.1 (June 28, 2016)
+- Fixed email address
+- Changed License to MIT
+- Updated Dependencies to modern versions
+
+# 1.0.0 (December 1, 2016)
+- Fixed Rakefile issue
+
+# 0.0.11 (December 1, 2016)
+- Fixed Gemspec issue
+
+# 0.0.10 (November 30, 2016)
 - Added accessor for Results in the VTResults class
 - Added initial test for VTFile
 - Added initial test for VTUrl
 - Added initial test for Application class
 - Updated docs on various classes
 
-# 0.0.9 (Novemeber 22, 2015)
+# 0.0.9 (November 22, 2015)
 - Adds empty options hash as arg to to_json override [kitplummer]
 
-# 0.0.8 (Novemeber 20, 2015)
+# 0.0.8 (November 20, 2015)
 - Remove double array bracket [kitplummer]
 
 # 0.0.7 (August 31, 2015)

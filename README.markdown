@@ -1,8 +1,8 @@
-# uirusu [![Build Status](https://travis-ci.org/arxopia/uirusu.svg)](https://travis-ci.org/arxopia/uirusu)
+# uirusu [![Gem Version](https://badge.fury.io/rb/uirusu.png)](http://badge.fury.io/rb/uirusu) [![Build Status](https://travis-ci.org/arxopia/uirusu.svg)](https://travis-ci.org/arxopia/uirusu)
 
 uirusu is an [Virustotal](http://www.virustotal.com) automation and convenience tool for hash, file and URL submission.
 
-The current version is 1.0.0.
+The current version is 1.0.1.
 
 ## Requirements
 
