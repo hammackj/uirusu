@@ -33,23 +33,25 @@ Gem::Specification.new do |s|
 	s.name = Uirusu::APP_NAME
 	s.version = Uirusu::VERSION
 	s.homepage = Uirusu::HOME_PAGE
-	s.summary = Uirusu::APP_NAME
-	s.description = "uirusu is library for interacting with Virustotal.org"
-	s.license = "BSD"
-
 	s.author = Uirusu::AUTHOR
 	s.email = Uirusu::EMAIL
 
-	s.files = Dir['[A-Z]*'] + Dir['lib/**/*'] + ['uirusu.gemspec']
-	s.default_executable = 'uirusu'
-	s.executables = ['uirusu']
-	s.require_paths	= ["lib"]
+	s.summary = Uirusu::APP_NAME
+	s.description = "uirusu is tool and REST library for interacting with Virustotal.org"
+	s.license = "MIT"
 
-	s.required_ruby_version = '>= 2.0.0'
+	s.files = Dir['[A-Z]*'] + Dir['lib/**/*'] + ['uirusu.gemspec']
+	s.default_executable = Uirusu::APP_NAME
+	s.executables = ["#{Uirusu::APP_NAME}"]
+	s.require_paths	= ["lib"]
 
 	s.has_rdoc = 'yard'
 	s.extra_rdoc_files = ["README.markdown", "LICENSE", "docs/NEWS.markdown", "docs/TODO.markdown"]
 
 	s.add_runtime_dependency 'json', '~> 1.8', '>= 1.8.3'
-	s.add_runtime_dependency 'rest-client', '~> 1.6', '>= 1.6.9'
+	s.add_runtime_dependency 'rest-client', '~> 1.8', '>= 1.8.0'
+
+	s.add_development_dependency 'yard', '~> 0.8', '>= 0.8.7.6'
+	s.add_development_dependency 'minitest', '~> 5.0', '>= 5.9'
+	s.add_development_dependency 'test-unit', '~> 3.2', ">= 3.2"
 end
