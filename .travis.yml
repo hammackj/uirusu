@@ -12,5 +12,5 @@ gemfile:
 
 notifications:
   email:
-    - jacob.hammack@hammackj.com
+    - jacob.hammack@arxopia.com
   irc: "irc.freenode.org#risu"

@@ -27,7 +27,7 @@
 base = __FILE__
 $:.unshift(File.join(File.dirname(base), 'lib'))
 
-require 'uirusu'
+require 'uirusu/version'
 
 Gem::Specification.new do |s|
 	s.name = Uirusu::APP_NAME
