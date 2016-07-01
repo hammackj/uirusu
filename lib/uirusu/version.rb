@@ -18,21 +18,12 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
+
 module Uirusu
-	CONFIG_FILE = "#{Dir.home}/.uirusu"
-	VT_API = "https://www.virustotal.com/vtapi/v2"
-	RESULT_FIELDS = [ :hash, :scanner, :version, :detected, :result, :md5, :sha1, :sha256, :update, :permalink ]
+	APP_NAME = "uirusu"
+	VERSION = "1.0.1"
+	HOME_PAGE = "http://arxopia.github.io/uirusu"
+	AUTHOR = "Jacob Hammack"
+	EMAIL = "jacob.hammack@arxopia.com"
+	GITHUB = "http://github.com/arxopia/uirusu"
 end
-
-require 'json'
-require 'rest-client'
-require 'optparse'
-require 'yaml'
-
-require 'uirusu/version'
-require 'uirusu/vtfile'
-require 'uirusu/vturl'
-require 'uirusu/vtcomment'
-require 'uirusu/vtresult'
-require 'uirusu/scanner'
-require 'uirusu/cli/application'
