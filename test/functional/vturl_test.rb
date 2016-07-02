@@ -20,37 +20,37 @@
 
 require 'test_helper'
 
-class VTFileTest < Minitest::Test
+class VTUrlTest < Minitest::Test
 
-  # Runs before each test, silences STDOUT/STDERR during the test
+	# Runs before each test, silences STDOUT/STDERR during the test
 	def setup
-    @original_stderr = $stderr
-    @original_stdout = $stdout
+		@original_stderr = $stderr
+		@original_stdout = $stdout
 
-    $stderr = File.open(File::NULL, "w")
-    $stdout = File.open(File::NULL, "w")
+		$stderr = File.open(File::NULL, "w")
+		$stdout = File.open(File::NULL, "w")
 
 		@app_test = Uirusu::CLI::Application.new
-    @app_test.load_config if File.exists?(Uirusu::CONFIG_FILE)
+		@app_test.load_config if File.exists?(Uirusu::CONFIG_FILE)
 	end
 
-  # Restore STDOUT/STDERR after each test
-  def teardown
-    $stderr = @original_stderr
-    $stdout = @original_stdout
-  end
+	# Restore STDOUT/STDERR after each test
+	def teardown
+		$stderr = @original_stderr
+		$stdout = @original_stdout
+	end
 
-  def test_return_XX_results_for_url_google_com
-    # Skip the test if we dont have a API key
-    if @app_test.config.empty? || @app_test.config['virustotal']['api-key'] == nil
-      skip
-    end
+	def test_return_XX_results_for_url_google_com
+		# Skip the test if we dont have a API key
+		if @app_test.config.empty? || @app_test.config['virustotal']['api-key'] == nil
+			skip
+		end
 
-    url = "http://www.google.com"
+		url = "http://www.google.com"
 
-    results = Uirusu::VTUrl.query_report(@app_test.config['virustotal']['api-key'], url)
-    result = Uirusu::VTResult.new(url, results)
+		results = Uirusu::VTUrl.query_report(@app_test.config['virustotal']['api-key'], url)
+		result = Uirusu::VTResult.new(url, results)
 
-    assert_equal 67, result.results.size
-  end
+		assert_equal 67, result.results.size
+	end
 end
