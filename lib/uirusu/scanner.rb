@@ -49,7 +49,7 @@ module Uirusu
 				digest = Digest::MD5.hexdigest(File.read(file))
 				@hash_list << digest
 
-			rescue Exception => e
+			rescue Exception
 				puts "[!] Cannot read #{file}"
 			end
 		end
