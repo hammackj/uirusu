@@ -1,9 +1,12 @@
 # News
 
-# 1.0.1 (June 28, 2016)
+# 1.0.1 (July 1, 2016)
 - Fixed email address
 - Changed License to MIT
 - Updated Dependencies to modern versions
+- Fixed issue with Gemfile / Gemspec build on travis.ci
+- Fixed issue #10; The command line utility will check the environment variables UIRUSU_VT_API_KEY and UIRUSU_VT_TIMEOUT if a config file doesn't exist. Allowing config file free installs to function.
+- Various other code clean ups for warnings
 
 # 1.0.0 (December 1, 2016)
 - Fixed Rakefile issue
