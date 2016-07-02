@@ -48,6 +48,7 @@ Gem::Specification.new do |s|
 	s.has_rdoc = 'yard'
 	s.extra_rdoc_files = ["README.markdown", "LICENSE", "docs/NEWS.markdown", "docs/TODO.markdown"]
 
+	s.add_runtime_dependency 'rake', '~> 11.2', '>= 11.2.2'
 	s.add_runtime_dependency 'json', '~> 1.8', '>= 1.8.3'
 	s.add_runtime_dependency 'rest-client', '~> 1.8', '>= 1.8.0'
 
