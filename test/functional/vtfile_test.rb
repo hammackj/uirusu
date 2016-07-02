@@ -22,36 +22,35 @@ require 'test_helper'
 
 class VTFileTest < Minitest::Test
 
-  # Runs before each test, silences STDOUT/STDERR during the test
+	# Runs before each test, silences STDOUT/STDERR during the test
 	def setup
-    @original_stderr = $stderr
-    @original_stdout = $stdout
+		@original_stderr = $stderr
+		@original_stdout = $stdout
 
-    $stderr = File.open(File::NULL, "w")
-    $stdout = File.open(File::NULL, "w")
+		$stderr = File.open(File::NULL, "w")
+		$stdout = File.open(File::NULL, "w")
 
 		@app_test = Uirusu::CLI::Application.new
-    @app_test.load_config if File.exists?(Uirusu::CONFIG_FILE)
-
+		@app_test.load_config if File.exists?(Uirusu::CONFIG_FILE)
 	end
 
-  # Restore STDOUT/STDERR after each test
-  def teardown
-    $stderr = @original_stderr
-    $stdout = @original_stdout
-  end
+	# Restore STDOUT/STDERR after each test
+	def teardown
+		$stderr = @original_stderr
+		$stdout = @original_stdout
+	end
 
-  def test_return_XX_results_for_hash_FD287794107630FA3116800E617466A9
-    # Skip the test if we dont have a API key
-    if @app_test.config.empty? || @app_test.config['virustotal']['api-key'] == nil
-      skip
-    end
+	def test_return_XX_results_for_hash_FD287794107630FA3116800E617466A9
+		# Skip the test if we dont have a API key
+		if @app_test.config.empty? || @app_test.config['virustotal']['api-key'] == nil
+			skip
+		end
 
-    hash = "FD287794107630FA3116800E617466A9" #Hash for a version of Poison Ivy
+		hash = "FD287794107630FA3116800E617466A9" #Hash for a version of Poison Ivy
 
-    results = Uirusu::VTFile.query_report(@app_test.config['virustotal']['api-key'], hash)
-    result = Uirusu::VTResult.new(hash, results)
+		results = Uirusu::VTFile.query_report(@app_test.config['virustotal']['api-key'], hash)
+		result = Uirusu::VTResult.new(hash, results)
 
-    assert_equal 54, result.results.size
-  end
+		assert_equal 54, result.results.size
+	end
 end
