@@ -1,4 +1,4 @@
-# uirusu [![Gem Version](https://badge.fury.io/rb/uirusu.png)](http://badge.fury.io/rb/uirusu) [![Build Status](https://travis-ci.org/arxopia/uirusu.svg)](https://travis-ci.org/arxopia/uirusu)
+# uirusu [![Gem Version](https://badge.fury.io/rb/uirusu.png)](http://badge.fury.io/rb/uirusu) [![Build Status](https://travis-ci.org/arxopia/uirusu.svg)](https://travis-ci.org/arxopia/uirusu) [![Code Climate](https://codeclimate.com/github/arxopia/uirusu/badges/gpa.svg)](https://codeclimate.com/github/arxopia/uirusu) [![Inline docs](http://inch-ci.org/github/arxopia/uirusu.svg?branch=master)](http://inch-ci.org/github/arxopia/uirusu)
 
 uirusu is an [Virustotal](http://www.virustotal.com) automation and convenience tool for hash, file and URL submission.
 
@@ -21,6 +21,10 @@ The current version is 1.0.1.
 
 ### Edit your configuration file with API key
 	% $EDITOR ~/.uirusu
+
+### Alternatively you can set Environment variables without a config file
+	% export UIRUSU_VT_API_KEY=<YOUR_KEY_HERE>
+	% export UIRUSU_VT_TIMEOUT=25
 
 ## Usage
 
@@ -74,7 +78,7 @@ print results if results != nil
 ```
 
 ##License
-Uirusu is licensed under the BSD license see the `LICENSE` file for the full license.
+Uirusu is licensed under the MIT license see the `LICENSE` file for the full license.
 
 ## Contact
 You can reach the team at jacob.hammack[@]arxopia[dot]com, http://www.arxopia.com, or contact hammackj on IRC @ irc.freenode.net, #risu
