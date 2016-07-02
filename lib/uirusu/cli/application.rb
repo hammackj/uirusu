@@ -46,7 +46,7 @@ module Uirusu
 					@options[:timeout]  = 25
 					@options[:directory] = nil
 
-					opt = OptionParser.new do |opt|
+					opts = OptionParser.new do |opt|
 						opt.banner = "#{APP_NAME} v#{VERSION}\nJacob Hammack\n#{HOME_PAGE}\n\n"
 						opt.banner << "Usage: #{APP_NAME} <options>"
 						opt.separator('')
@@ -139,14 +139,14 @@ module Uirusu
 						}
 					end
 
-				  if ARGV.length != 0
-				    opt.parse!
-				  else
-				    puts opt.to_s + "\n"
-					  exit
+					if ARGV.length != 0
+						opts.parse!
+					else
+						puts opts.to_s + "\n"
+						exit
 					end
-				rescue OptionParser::MissingArgument => m
-					puts opt.to_s + "\n"
+				rescue OptionParser::MissingArgument
+					puts opts.to_s + "\n"
 					exit
 				end
 			end
@@ -157,8 +157,8 @@ module Uirusu
 				f = File.expand_path(file)
 
 				if File.exists?(f) == false
-					File.open(f, 'w+') do |f|
-						f.write("virustotal: \n  api-key: \n  timeout: 25\n\n")
+					File.open(f, 'w+') do |of|
+						of.write("virustotal: \n  api-key: \n  timeout: 25\n\n")
 					end
 					puts "[*] An empty #{f} has been created. Please edit and fill in the correct values."
 				else
@@ -169,11 +169,28 @@ module Uirusu
 			# Loads the .uirusu config file for the api key
 			#
 			def load_config (file=CONFIG_FILE)
+
+				@config = nil
+
 				f = File.expand_path(file)
 
 				if File.exists?(f)
 					@config = YAML.load_file f
 				else
+					if ENV['UIRUSU_VT_API_KEY']
+						@config = {}
+						@config['virustotal'] = {}
+						@config['virustotal']['api-key'] = ENV['UIRUSU_VT_API_KEY']
+
+						if ENV['UIRUSU_VT_TIMEOUT']
+							@config['virustotal']['timeout'] = ENV['UIRUSU_VT_TIMEOUT']
+						else
+							@config['virustotal']['timeout'] = 25
+						end
+					end
+				end
+
+				if @config == nil
 					STDERR.puts "[!] #{CONFIG_FILE} does not exist. Please run #{APP_NAME} --create-config, to create it."
 					exit
 				end
@@ -210,8 +227,8 @@ module Uirusu
 
 					if retries >= 0
 						sleep 60
-						retry
 						retries = retries - 1
+						retry
 					end
 				end
 
@@ -222,28 +239,28 @@ module Uirusu
 					# is requested to be rescanned.
 					result_array = result.is_a?(Array) ? result : [ result ]
 
-					result_array.collect do |result|
-						if result['response_code'] == 1
-							STDERR.puts "[*] Attempting to parse the results for: #{result['resource']}" if @options['verbose']
-							results = mod.query_report(@config['virustotal']['api-key'], result['resource'])
+					result_array.collect do |r|
+						if r['response_code'] == 1
+							STDERR.puts "[*] Attempting to parse the results for: #{r['resource']}" if @options['verbose']
+							results = mod.query_report(@config['virustotal']['api-key'], r['resource'])
 
 							while results['response_code'] != 1
 								STDERR.puts "[*] File has not been analyized yet, waiting 60 seconds to try again" if  @options['verbose']
 								sleep 60
-								results = mod.query_report(@config['virustotal']['api-key'], result['resource'])
+								results = mod.query_report(@config['virustotal']['api-key'], r['resource'])
 							end
 
-							return result['resource'], results
+							return r['resource'], results
 
-						elsif result['response_code'] == 0 and @options['rescan']
-							STDERR.puts "[!] Unknown Virustotal error for rescan of #{result['resource']}." if @options['verbose']
+						elsif r['response_code'] == 0 and @options['rescan']
+							STDERR.puts "[!] Unknown Virustotal error for rescan of #{r['resource']}." if @options['verbose']
 							next
 
-						elsif result['response_code'] == -1 and @options['rescan']
-							STDERR.puts "[!] Virustotal does not have a sample of #{result['resource']}." if @options['verbose']
+						elsif r['response_code'] == -1 and @options['rescan']
+							STDERR.puts "[!] Virustotal does not have a sample of #{r['resource']}." if @options['verbose']
 							next
 
-						elsif result['response_code'] == -2
+						elsif r['response_code'] == -2
 							STDERR.puts "[!] Virustotal limits exceeded, ***do not edit the timeout values.***"
 							exit(1)
 						else
@@ -254,8 +271,8 @@ module Uirusu
 					STDERR.puts "[!] An error has occurred retrieving the report. Retrying 60 seconds up #{retries} retries. #{e.message}\n" if  @options['verbose']
 					if retries >= 0
 						sleep 60
-						retry
 						retries = retries - 1
+						retry
 					end
 				end
 			end
