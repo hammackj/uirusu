@@ -60,7 +60,7 @@ module Uirusu
 					abort "[!] Invalid API KEY! Please correct this! Check ~/.uirusu"
 				else
 					permalink = result['permalink']
-					date = result['scan_date']
+					scan_date = result['scan_date']
 					md5 = result['md5']
 					sha1 = result['sha1']
 					sha256 = result['sha256']
@@ -82,6 +82,7 @@ module Uirusu
 								res[:result] = value['result']
 							end
 
+							res[:scan_date] = scan_date
 							res[:update] = value['update']
 							res[:permalink] = permalink unless permalink == nil
 
