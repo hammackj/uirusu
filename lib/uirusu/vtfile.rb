@@ -53,7 +53,7 @@ module Uirusu
 				apikey: api_key,
 				resource: resource
 			}
-			self.query_api REPORT_URL, params.merge!(args)
+			Uirusu.query_api REPORT_URL, params.merge!(args)
 		end
 
         # Submits a file to Virustotal.com for analysis
@@ -73,7 +73,7 @@ module Uirusu
                 filename: path_to_file, 
                 file: File.new(path_to_file, 'rb')
             }
-            self.query_api SCAN_URL, params.merge!(args), true
+            Uirusu.query_api SCAN_URL, params.merge!(args), true
         end
 
 		# Retrieves a custom upload URL for files larger than 32MB
@@ -85,7 +85,7 @@ module Uirusu
 			params = { 
 				apikey: api_key
 			}
-			self.query_api SCAN_UPLOAD_URL, params
+			Uirusu.query_api SCAN_UPLOAD_URL, params
 		end
 
         # Requests an existing file to be rescanned.
@@ -105,7 +105,7 @@ module Uirusu
                 resource: resource
             }
 
-            self.query_api RESCAN_URL, params.merge!(args), true
+            Uirusu.query_api RESCAN_URL, params.merge!(args), true
         end
 
 		# Deletes a scheduled rescan request.
@@ -124,7 +124,7 @@ module Uirusu
 				resource: resource
 			}
 
-			self.query_api RESCAN_DELETE_URL, params, true
+			Uirusu.query_api RESCAN_DELETE_URL, params, true
 		end
 
 		# Requests a behavioural report on a hash.
@@ -142,7 +142,7 @@ module Uirusu
 				apikey: api_key,
 				hash: hash
 			}
-			self.query_api BEHAVIOUR_URL, params
+			Uirusu.query_api BEHAVIOUR_URL, params
 		end
 
 		# Requests a network traffic report on a hash.
@@ -160,7 +160,7 @@ module Uirusu
 				apikey: api_key,
 				hash: hash
 			}
-			self.query_api NETWORK_TRAFFIC_URL, params
+			Uirusu.query_api NETWORK_TRAFFIC_URL, params
 		end
 
 		# Perform an advanced reverse search.
@@ -179,7 +179,7 @@ module Uirusu
 				apikey: api_key,
 				query: query
 			}
-			self.query_api SEARCH_URL, params.merge!(args)
+			Uirusu.query_api SEARCH_URL, params.merge!(args)
 		end
 
 		# Access the clustering section of VT Intelligence.
@@ -197,7 +197,7 @@ module Uirusu
 				apikey: api_key,
 				date: date
 			}
-			self.query_api CLUSTERS_URL, params
+			Uirusu.query_api CLUSTERS_URL, params
 		end
 
 		# Download a file from vT's store given a hash.
@@ -215,7 +215,7 @@ module Uirusu
 				apikey: api_key,
 				hash: hash
 			}
-			self.query_api DOWNLOAD_URL, params
+			Uirusu.query_api DOWNLOAD_URL, params
 		end
 
 		# Retrieve a live feed of all uploaded files to VT.
@@ -236,51 +236,6 @@ module Uirusu
 		# @return [JSON] Parsed response
 		def self.false_positives(api_key, limit=100)
 			raise "#false_positives not yet implemented. This API is only available to antivirus vendors participating in VirusTotal."
-		end
-
-
-		private
-		def self.query_api(url, params, post=false)
-			if params[:apikey] == nil
-				raise "Invalid API Key"
-			end
-
-			begin
-				if post
-					response = RestClient.post url, **params
-				else
-					response = RestClient.get url, params: params
-				end
-			rescue => e
-				response = e.response
-			end
-			self.parse_response response
-		end
-
-		# Parses the response or raises an exception accordingly.
-		#
-		# @param response The response from RestClient
-		#
-		# @return [JSON] Parsed response
-		def self.parse_response(response)
-			case response.code
-				when 429, 204
-					raise "Virustotal limit reached. Try again later."
-				when 403
-					raise "Invalid privileges, please check your API key."
-				when 200
-					# attempt to parse it as json, otherwise return the raw response
-					# network_traffic and download return non-JSON data
-					begin
-						JSON.parse(response)
-					rescue
-						response
-					end
-				when 500
-					nil
-				else
-					raise "Unknown Server error. (#{response.code})"
-			end
-		end
+		end	
 	end
 end

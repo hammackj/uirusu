@@ -22,6 +22,57 @@ module Uirusu
 	CONFIG_FILE = "#{Dir.home}/.uirusu"
 	VT_API = "https://www.virustotal.com/vtapi/v2"
 	RESULT_FIELDS = [ :hash, :scanner, :version, :detected, :result, :md5, :sha1, :sha256, :update, :permalink ]
+
+	protected
+	# Queries the API using RestClient and parses the response.
+	#
+	# @param url [string] URL endpoint to send the request to
+	# @param params [hash] Hash of HTTP params
+	# @param post [boolean] (optional) Specifies whether to use POST or GET
+	#
+	# @return [JSON] Parsed response
+	def self.query_api(url, params, post=false)
+		if params[:apikey] == nil
+			raise "Invalid API Key"
+		end
+
+		begin
+			if post
+				response = RestClient.post url, **params
+			else
+				response = RestClient.get url, params: params
+			end
+		rescue => e
+			response = e.response
+		end
+		self.parse_response response
+	end
+
+	# Parses the response or raises an exception accordingly.
+	#
+	# @param response The response from RestClient
+	#
+	# @return [JSON] Parsed response
+	def self.parse_response(response)
+		case response.code
+			when 429, 204
+				raise "Virustotal limit reached. Try again later."
+			when 403
+				raise "Invalid privileges, please check your API key."
+			when 200
+				# attempt to parse it as json, otherwise return the raw response
+				# network_traffic and download return non-JSON data
+				begin
+					JSON.parse(response)
+				rescue
+					response
+				end
+			when 500
+				nil
+			else
+				raise "Unknown Server error. (#{response.code})"
+		end
+	end
 end
 
 require 'json'
@@ -32,6 +83,8 @@ require 'yaml'
 require 'uirusu/version'
 require 'uirusu/vtfile'
 require 'uirusu/vturl'
+require 'uirusu/vtipaddr'
+require 'uirusu/vtdomain'
 require 'uirusu/vtcomment'
 require 'uirusu/vtresult'
 require 'uirusu/scanner'
