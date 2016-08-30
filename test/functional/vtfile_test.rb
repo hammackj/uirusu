@@ -51,6 +51,19 @@ class VTFileTest < Minitest::Test
 		results = Uirusu::VTFile.query_report(@app_test.config['virustotal']['api-key'], hash)
 		result = Uirusu::VTResult.new(hash, results)
 
-		assert_equal 54, result.results.size
+		assert_equal 55, result.results.size
+	end
+
+	def test_return_additional_info_for_hash_FD287794107630FA3116800E617466A9
+		# Skip the test if we dont have a API key
+		if @app_test.config.empty? || @app_test.config['virustotal']['api-key'] == nil || !@app_test.config['virustotal']['private']
+			skip
+		end
+
+		hash = "FD287794107630FA3116800E617466A9" #Hash for a version of Poison Ivy
+
+		results = Uirusu::VTFile.query_report(@app_test.config['virustotal']['api-key'], hash, allinfo: 1)
+
+		assert_includes results.keys, "additional_info"
 	end
 end

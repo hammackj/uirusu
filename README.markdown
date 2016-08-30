@@ -77,6 +77,45 @@ results = Uirusu::VTComment.post_comment(API_KEY, hash, comment)
 print results if results != nil
 ```
 
+### Private API Support
+Private API support is supported by the gem, but is not yet supported in the CLI application. 
+
+Notes:
+* Details on the private API can be found [here](https://www.virustotal.com/en/documentation/private-api)
+* Optional parameters can be sent to the method calls as named parameters (see VTFile#query_report below)
+* #feed and #false_positive are currently not supported, as they require a special API key
+
+#### Examples
+Below are some examples specific to the private API.
+
+##### Files
+```ruby
+# Search for a hash and get additional metadata
+Uirusu::VTFile.query_report(API_KEY, hash, allinfo: 1)
+
+# Get a file upload URL for larger files
+Uirusu::VTFile.scan_upload_url(API_KEY)
+
+# Submit a file with a callback URL
+Uirusu::VTFile.scan_file(API_KEY, filepath, notify_url: 'http://requestb.in/117n0hb1')
+
+# Request a behavioural report on a hash
+Uirusu::VTFile.behaviour(API_KEY, hash)
+
+# Request a network traffic report on a hash
+Uirusu::VTFile.network_traffic(API_KEY, hash)
+```
+
+##### Domains and IPs
+```ruby
+
+# Get a report for a domain
+Uirusu::VTDomain.query_report(API_KEY, domain)
+
+# Get a report for an IP address
+Uirusu::VTIPAddr.query_report(API_KEY, ip)
+```
+
 ##License
 Uirusu is licensed under the MIT license see the `LICENSE` file for the full license.
 
