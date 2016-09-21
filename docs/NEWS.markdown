@@ -1,5 +1,8 @@
 # News
 
+# 1.0.2 (September 21, 2016)
+- Added Private API support [@joshporter1]
+
 # 1.0.1 (July 1, 2016)
 - Fixed email address
 - Changed License to MIT
