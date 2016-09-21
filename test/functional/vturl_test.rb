@@ -57,7 +57,7 @@ class VTUrlTest < Minitest::Test
 	def test_return_additional_info_for_url_google_com
 		# Skip the test if we dont have a API key
 		if @app_test.config.empty? || @app_test.config['virustotal']['api-key'] == nil || !@app_test.config['virustotal']['private']
-			skip
+			skip  'url additional_info private-api'
 		end
 
 		url = "http://www.google.com"

@@ -57,7 +57,7 @@ class VTFileTest < Minitest::Test
 	def test_return_additional_info_for_hash_FD287794107630FA3116800E617466A9
 		# Skip the test if we dont have a API key
 		if @app_test.config.empty? || @app_test.config['virustotal']['api-key'] == nil || !@app_test.config['virustotal']['private']
-			skip
+			skip  'hash additional_info private-api'
 		end
 
 		hash = "FD287794107630FA3116800E617466A9" #Hash for a version of Poison Ivy
