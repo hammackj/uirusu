@@ -25,7 +25,7 @@
 
 <p>uirusu is an <a href="http://www.virustotal.com">Virustotal</a> automation and convenience tool for hash, file and URL submission.</p>
 
-<p>The current version is 1.0.1.</p>
+<p>The current version is 1.0.2.</p>
 
 <h2>
 <a id="requirements" class="anchor" href="#requirements" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Requirements</h2>
@@ -133,6 +133,53 @@ print result.to_stdout <span class="pl-k">if</span> result <span class="pl-k">!=
 <span class="pl-c">#To post a comment to a resource(url/hash/scan_id)</span>
 results <span class="pl-k">=</span> <span class="pl-c1">Uirusu</span>::<span class="pl-c1">VTComment</span>.post_comment(<span class="pl-c1">API_KEY</span>, hash, comment)
 print results <span class="pl-k">if</span> results <span class="pl-k">!=</span> <span class="pl-c1">nil</span></pre></div>
+
+<h3>
+<a id="private-api-support" class="anchor" href="#private-api-support" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Private API Support</h3>
+
+<p>Private API support is supported by the gem, but is not yet supported in the CLI application.</p>
+
+<p>Notes:</p>
+
+<ul>
+<li>Details on the private API can be found <a href="https://www.virustotal.com/en/documentation/private-api">here</a>
+</li>
+<li>Optional parameters can be sent to the method calls as named parameters (see VTFile#query_report below)</li>
+<li>#feed and #false_positive are currently not supported, as they require a special API key</li>
+</ul>
+
+<h4>
+<a id="examples" class="anchor" href="#examples" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Examples</h4>
+
+<p>Below are some examples specific to the private API.</p>
+
+<h5>
+<a id="files" class="anchor" href="#files" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Files</h5>
+
+<div class="highlight highlight-source-ruby"><pre><span class="pl-c"># Search for a hash and get additional metadata</span>
+<span class="pl-c1">Uirusu</span>::<span class="pl-c1">VTFile</span>.query_report(<span class="pl-c1">API_KEY</span>, hash, <span class="pl-c1">allinfo:</span> <span class="pl-c1">1</span>)
+
+<span class="pl-c"># Get a file upload URL for larger files</span>
+<span class="pl-c1">Uirusu</span>::<span class="pl-c1">VTFile</span>.scan_upload_url(<span class="pl-c1">API_KEY</span>)
+
+<span class="pl-c"># Submit a file with a callback URL</span>
+<span class="pl-c1">Uirusu</span>::<span class="pl-c1">VTFile</span>.scan_file(<span class="pl-c1">API_KEY</span>, filepath, <span class="pl-c1">notify_url:</span> <span class="pl-s"><span class="pl-pds">'</span>http://requestb.in/117n0hb1<span class="pl-pds">'</span></span>)
+
+<span class="pl-c"># Request a behavioural report on a hash</span>
+<span class="pl-c1">Uirusu</span>::<span class="pl-c1">VTFile</span>.behaviour(<span class="pl-c1">API_KEY</span>, hash)
+
+<span class="pl-c"># Request a network traffic report on a hash</span>
+<span class="pl-c1">Uirusu</span>::<span class="pl-c1">VTFile</span>.network_traffic(<span class="pl-c1">API_KEY</span>, hash)</pre></div>
+
+<h5>
+<a id="domains-and-ips" class="anchor" href="#domains-and-ips" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Domains and IPs</h5>
+
+<div class="highlight highlight-source-ruby"><pre>
+<span class="pl-c"># Get a report for a domain</span>
+<span class="pl-c1">Uirusu</span>::<span class="pl-c1">VTDomain</span>.query_report(<span class="pl-c1">API_KEY</span>, domain)
+
+<span class="pl-c"># Get a report for an IP address</span>
+<span class="pl-c1">Uirusu</span>::<span class="pl-c1">VTIPAddr</span>.query_report(<span class="pl-c1">API_KEY</span>, ip)</pre></div>
 
 <h2>
 <a id="license" class="anchor" href="#license" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>License</h2>
