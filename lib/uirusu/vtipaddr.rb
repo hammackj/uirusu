@@ -21,54 +21,25 @@
 module Uirusu
 	#
 	#
-	module VTUrl
-		SCAN_URL   = Uirusu::VT_API + "/url/scan"
-		REPORT_URL = Uirusu::VT_API + "/url/report"
+	module VTIPAddr
+		REPORT_URL = Uirusu::VT_API + "/ip-address/report"
 
-		# Submits a URL to be scanned by Virustotal.com
+		# Searches reports by IP from Virustotal.com
 		#
 		# @param api_key Virustotal.com API key
-		# @param resource url to submit
+		# @param ip IP address to search
 		#
 		# @return [JSON] Parsed response
-		def self.scan_url(api_key, resource)
-			if resource == nil
-				raise "Invalid resource, must be a valid url"
+		def self.query_report(api_key, ip)
+			if ip == nil
+				raise "Invalid resource, must be a valid IPv4 address"
 			end
 
 			params = {
 				apikey: api_key,
-				resource: resource
+				ip: ip
 			}
-			Uirusu.query_api SCAN_URL, params
-		end
-
-		# Searches reports by URL from Virustotal.com
-		#
-		# @param api_key Virustotal.com API key
-		# @param resource url to search
-		#
-		# @return [JSON] Parsed response
-		def self.query_report(api_key, resource, **args)
-			if resource == nil
-				raise "Invalid resource, must be a valid url"
-			end
-
-			params = {
-				apikey: api_key,
-				resource: resource
-			}
-			Uirusu.query_api REPORT_URL, params.merge!(args)
-		end
-
-		# Searches reports by URL from Virustotal.com
-		#
-		# @param api_key Virustotal.com API key
-		# @param resource url to search
-		#
-		# @return [JSON] Parsed response
-		def self.feed(api_key, resource, **args)
-			raise "#feed not yet implemented. This API call is only available to users that have licensed the unlimited tier of VirusTotal private Mass API."
+			Uirusu.query_api REPORT_URL, params
 		end
 	end
 end

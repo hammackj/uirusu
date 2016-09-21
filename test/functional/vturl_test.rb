@@ -51,6 +51,19 @@ class VTUrlTest < Minitest::Test
 		results = Uirusu::VTUrl.query_report(@app_test.config['virustotal']['api-key'], url)
 		result = Uirusu::VTResult.new(url, results)
 
-		assert_equal 67, result.results.size
+		assert_equal 68, result.results.size
+	end
+
+	def test_return_additional_info_for_url_google_com
+		# Skip the test if we dont have a API key
+		if @app_test.config.empty? || @app_test.config['virustotal']['api-key'] == nil || !@app_test.config['virustotal']['private']
+			skip
+		end
+
+		url = "http://www.google.com"
+
+		results = Uirusu::VTUrl.query_report(@app_test.config['virustotal']['api-key'], url, allinfo: 1)
+
+		assert_includes results.keys, "additional_info"
 	end
 end

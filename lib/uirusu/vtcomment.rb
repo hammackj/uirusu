@@ -23,6 +23,7 @@ module Uirusu
 	# Virustotal.com public API
 	module VTComment
 		POST_URL = Uirusu::VT_API + "/comments/put"
+		GET_URL = Uirusu::VT_API + "/comments/get"
 
 		# Submits a comment to Virustotal.com for a specific resource
 		#
@@ -32,10 +33,6 @@ module Uirusu
 		#
 		# @return [JSON] Parsed response
 		def self.post_comment(api_key, resource, comment)
-			if api_key == nil
-				raise "Invalid API Key"
-			end
-
 			if resource == nil
 				raise "Invalid resource, must be a valid url"
 			end
@@ -44,18 +41,32 @@ module Uirusu
 				raise "You must provide a comment to submit."
 			end
 
-			response = RestClient.post POST_URL, :apikey => api_key, :resource => resource, :comment => comment
+			params = {
+				apikey: api_key,
+				resource: resource,
+				comment: comment
+			}
+			Uirusu.query_api POST_URL, params
+		end
 
-			case response.code
-				when 429, 204
-					raise "Virustotal limit reached. Try again later."
-				when 403
-					raise "Invalid privileges, please check your API key."
-				when 200
-					JSON.parse(response)
-				else
-					raise "Unknown Server error."
+		# Retrieve a list of comments to Virustotal.com for a specific resource
+		#
+		# @param [String] api_key Virustotal.com API key
+		# @param [String] resource MD5/sha1/sha256/scan_id/URL to search for
+		# @param [DateTime] before A datetime token that allows you to iterate over all comments on a specific item whenever it has been commented on more than 25 times
+		#
+		# @return [JSON] Parsed response
+		def self.get_comments(api_key, resource, before=nil)
+			if resource == nil
+				raise "Invalid resource, must be a valid url"
 			end
+
+			params = {
+				apikey: api_key,
+				resource: resource
+			}
+			params[:before] = before unless before.nil?
+			Uirusu.query_api GET_URL, params
 		end
 	end
 end
