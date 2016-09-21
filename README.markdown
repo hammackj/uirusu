@@ -2,7 +2,7 @@
 
 uirusu is an [Virustotal](http://www.virustotal.com) automation and convenience tool for hash, file and URL submission.
 
-The current version is 1.0.1.
+The current version is 1.0.2.
 
 ## Requirements
 
@@ -78,7 +78,7 @@ print results if results != nil
 ```
 
 ### Private API Support
-Private API support is supported by the gem, but is not yet supported in the CLI application. 
+Private API support is supported by the gem, but is not yet supported in the CLI application.
 
 Notes:
 * Details on the private API can be found [here](https://www.virustotal.com/en/documentation/private-api)
