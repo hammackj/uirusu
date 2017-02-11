@@ -23,9 +23,9 @@ module Uirusu
 	# Module for Accessing the File scan and report functionalities of the
 	# Virustotal.com public API
 	module VTFile
-        SCAN_URL             = Uirusu::VT_API + "/file/scan"
+		SCAN_URL             = Uirusu::VT_API + "/file/scan"
 		SCAN_UPLOAD_URL      = Uirusu::VT_API + "/file/scan/upload_url"
-        RESCAN_URL           = Uirusu::VT_API + "/file/rescan"
+		RESCAN_URL           = Uirusu::VT_API + "/file/rescan"
 		RESCAN_DELETE_URL    = Uirusu::VT_API + "/file/rescan/delete"
 		REPORT_URL           = Uirusu::VT_API + "/file/report"
 		BEHAVIOUR_URL        = Uirusu::VT_API + "/file/behaviour"
@@ -53,28 +53,28 @@ module Uirusu
 				apikey: api_key,
 				resource: resource
 			}
-			Uirusu.query_api REPORT_URL, params.merge!(args)
+			Uirusu.query_api REPORT_URL, params.merge!(args), true
 		end
 
-        # Submits a file to Virustotal.com for analysis
-        #
-        # @param api_key Virustotal.com API key
-        # @param path_to_file Path to file on disk to upload
-        # @params **args named arguments for optional parameters - https://www.virustotal.com/en/documentation/private-api/#scan
-        #
-        # @return [JSON] Parsed response
-        def self.scan_file(api_key, path_to_file, **args)
-            if !File.exists?(path_to_file)
-                raise Errno::ENOENT
-            end
+		# Submits a file to Virustotal.com for analysis
+		#
+		# @param api_key Virustotal.com API key
+		# @param path_to_file Path to file on disk to upload
+		# @params **args named arguments for optional parameters - https://www.virustotal.com/en/documentation/private-api/#scan
+		#
+		# @return [JSON] Parsed response
+		def self.scan_file(api_key, path_to_file, **args)
+			if !File.exists?(path_to_file)
+				raise Errno::ENOENT
+			end
 
-            params = { 
-                apikey: api_key,
-                filename: path_to_file, 
-                file: File.new(path_to_file, 'rb')
-            }
-            Uirusu.query_api SCAN_URL, params.merge!(args), true
-        end
+			params = {
+				apikey: api_key,
+				filename: path_to_file,
+				file: File.new(path_to_file, 'rb')
+			}
+			Uirusu.query_api SCAN_URL, params.merge!(args), true
+		end
 
 		# Retrieves a custom upload URL for files larger than 32MB
 		#
@@ -82,31 +82,30 @@ module Uirusu
 		#
 		# @return [JSON] Parsed response
 		def self.scan_upload_url(api_key)
-			params = { 
+			params = {
 				apikey: api_key
 			}
 			Uirusu.query_api SCAN_UPLOAD_URL, params
 		end
 
-        # Requests an existing file to be rescanned.
-        #
-        # @param api_key Virustotal.com API key
-        # @param resource MD5/sha1/sha256/scan_id to rescan
-        # @params **args named arguments for optional parameters - https://www.virustotal.com/en/documentation/private-api/#rescan
-        #
-        # @return [JSON] Parsed response
-        def self.rescan_file(api_key, resource, **args)
-            if resource == nil
-                raise "Invalid resource, must be md5/sha1/sha256/scan_id"
-            end
+		# Requests an existing file to be rescanned.
+		#
+		# @param api_key Virustotal.com API key
+		# @param resource MD5/sha1/sha256/scan_id to rescan
+		# @params **args named arguments for optional parameters - https://www.virustotal.com/en/documentation/private-api/#rescan
+		#
+		# @return [JSON] Parsed response
+		def self.rescan_file(api_key, resource, **args)
+			if resource == nil
+				raise "Invalid resource, must be md5/sha1/sha256/scan_id"
+			end
 
-            params = { 
-                apikey: api_key,
-                resource: resource
-            }
-
-            Uirusu.query_api RESCAN_URL, params.merge!(args), true
-        end
+			params = {
+				apikey: api_key,
+				resource: resource
+			}
+			Uirusu.query_api RESCAN_URL, params.merge!(args), true
+		end
 
 		# Deletes a scheduled rescan request.
 		#
@@ -119,7 +118,7 @@ module Uirusu
 				raise "Invalid resource, must be md5/sha1/sha256/scan_id"
 			end
 
-			params = { 
+			params = {
 				apikey: api_key,
 				resource: resource
 			}
@@ -236,6 +235,6 @@ module Uirusu
 		# @return [JSON] Parsed response
 		def self.false_positives(api_key, limit=100)
 			raise "#false_positives not yet implemented. This API is only available to antivirus vendors participating in VirusTotal."
-		end	
+		end
 	end
 end
