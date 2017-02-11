@@ -153,7 +153,7 @@ module Uirusu
 
 			# Create config skeleton
 			#
-			def create_config (file=CONFIG_FILE)
+			def create_config file=CONFIG_FILE
 				f = File.expand_path(file)
 
 				if File.exists?(f) == false
@@ -168,7 +168,7 @@ module Uirusu
 
 			# Loads the .uirusu config file for the api key
 			#
-			def load_config (file=CONFIG_FILE)
+			def load_config file=CONFIG_FILE
 
 				@config = nil
 
