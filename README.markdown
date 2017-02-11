@@ -1,12 +1,12 @@
-# uirusu [![Gem Version](https://badge.fury.io/rb/uirusu.png)](http://badge.fury.io/rb/uirusu) [![Build Status](https://travis-ci.org/arxopia/uirusu.svg)](https://travis-ci.org/arxopia/uirusu) [![Code Climate](https://codeclimate.com/github/arxopia/uirusu/badges/gpa.svg)](https://codeclimate.com/github/arxopia/uirusu) [![Inline docs](http://inch-ci.org/github/arxopia/uirusu.svg?branch=master)](http://inch-ci.org/github/arxopia/uirusu)
+# uirusu [![Gem Version](https://badge.fury.io/rb/uirusu.png)](http://badge.fury.io/rb/uirusu) [![Build Status](https://travis-ci.org/hammackj/uirusu.svg)](https://travis-ci.org/hammackj/uirusu) [![Code Climate](https://codeclimate.com/github/arxopia/uirusu/badges/gpa.svg)](https://codeclimate.com/github/hammackj/uirusu) [![Inline docs](http://inch-ci.org/github/arxopia/uirusu.svg?branch=master)](http://inch-ci.org/github/arxopia/uirusu)
 
 uirusu is an [Virustotal](http://www.virustotal.com) automation and convenience tool for hash, file and URL submission.
 
-The current version is 1.0.2.
+The current version is 1.1.0.
 
 ## Requirements
 
-* ruby 2.0+
+* ruby 2.4+
 * json
 * rest-client
 * **public api key from [virustotal.com](http://www.virustotal.com)**
@@ -120,4 +120,4 @@ Uirusu::VTIPAddr.query_report(API_KEY, ip)
 Uirusu is licensed under the MIT license see the `LICENSE` file for the full license.
 
 ## Contact
-You can reach the team at jacob.hammack[@]arxopia[dot]com, http://www.arxopia.com, or contact hammackj on IRC @ irc.freenode.net, #risu
+You can reach the team at jacob.hammack[@]hammackj[dot]com, http://www.hammackj.com, or contact hammackj

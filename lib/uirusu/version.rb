@@ -21,8 +21,8 @@
 module Uirusu
 	APP_NAME = "uirusu"
 	VERSION = "1.1.0"
-	HOME_PAGE = "http://arxopia.github.io/uirusu"
+	HOME_PAGE = "http://hammackj.github.io/uirusu"
 	AUTHOR = "Jacob Hammack"
-	EMAIL = "jacob.hammack@arxopia.com"
-	GITHUB = "http://github.com/arxopia/uirusu"
+	EMAIL = "jacob.hammack@hammackj.com"
+	GITHUB = "http://github.com/hammackj/uirusu"
 end

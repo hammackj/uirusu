@@ -5,11 +5,12 @@ sudo: false
 rvm:
   - 2.2.4
   - 2.3.0
+  - 2.4.0
 
 gemfile:
   - Gemfile
 
 notifications:
   email:
-    - jacob.hammack@arxopia.com
+    - jacob.hammack@hammackj.com
   irc: "irc.freenode.org#risu"
