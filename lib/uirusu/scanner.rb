@@ -29,7 +29,7 @@ module Uirusu
 		# Recursively lists all files in a directory
 		# calling process_file on each file
 		#
-		def Scanner.recurse (file_name)
+		def Scanner.recurse file_name
 			Dir.new("#{file_name}").each do |file|
 				next if file.match(/^\.+/)
 				path = "#{file_name}/#{file}"
@@ -44,7 +44,7 @@ module Uirusu
 
 		# Processes a file, hashing it with MD5
 		#
-		def Scanner.process_file (file)
+		def Scanner.process_file file
 			begin
 				digest = Digest::MD5.hexdigest(File.read(file))
 				@hash_list << digest
