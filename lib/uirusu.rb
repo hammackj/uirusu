@@ -36,15 +36,22 @@ module Uirusu
 			raise "Invalid API Key"
 		end
 
+		# TODO get options to here.
+		#resource = RestClient::Resource.new(url, :verify_ssl=>false)
+		resource = RestClient::Resource.new(url)
+
 		begin
 			if post
-				response = RestClient.post url, **params
+				#response = RestClient.post url, **params
+				response = resource.post(params)
 			else
-				response = RestClient.get url, params: params
+				#response = RestClient.get url, params: params
+				response = resource.get(params)
 			end
 		rescue => e
 			response = e.response
 		end
+
 		self.parse_response response
 	end
 
@@ -54,24 +61,29 @@ module Uirusu
 	#
 	# @return [JSON] Parsed response
 	def self.parse_response(response)
-		case response.code
-			when 429, 204
-				raise "Virustotal limit reached. Try again later."
-			when 403
-				raise "Invalid privileges, please check your API key."
-			when 200
-				# attempt to parse it as json, otherwise return the raw response
-				# network_traffic and download return non-JSON data
-				begin
-					JSON.parse(response)
-				rescue
-					response
-				end
-			when 500
-				nil
-			else
-				raise "Unknown Server error. (#{response.code})"
+		puts "Parse Response"
+		begin
+			case response.code
+				when 429, 204
+					raise "Virustotal limit reached. Try again later."
+				when 403
+					raise "Invalid privileges, please check your API key."
+				when 200
+					# attempt to parse it as json, otherwise return the raw response
+					# network_traffic and download return non-JSON data
+					begin
+						JSON.parse(response)
+					rescue
+						response
+					end
+				when 500
+					nil
+				else
+					raise "Unknown Server error. (#{response.code})"
+			end
 		end
+	rescue => e
+		puts e.message
 	end
 end
 
