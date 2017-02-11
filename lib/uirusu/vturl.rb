@@ -38,9 +38,10 @@ module Uirusu
 
 			params = {
 				apikey: api_key,
-				resource: resource
+				url: resource
 			}
-			Uirusu.query_api SCAN_URL, params
+
+			Uirusu.query_api SCAN_URL, params, true
 		end
 
 		# Searches reports by URL from Virustotal.com
@@ -58,7 +59,8 @@ module Uirusu
 				apikey: api_key,
 				resource: resource
 			}
-			Uirusu.query_api REPORT_URL, params.merge!(args)
+
+			Uirusu.query_api REPORT_URL, params.merge!(args), true
 		end
 
 		# Searches reports by URL from Virustotal.com
