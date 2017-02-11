@@ -40,7 +40,7 @@ class VTUrlTest < Minitest::Test
 		$stdout = @original_stdout
 	end
 
-	def test_return_XX_results_for_url_google_com
+	def test_return_65_results_for_url_google_com
 		# Skip the test if we dont have a API key
 		if @app_test.config.empty? || @app_test.config['virustotal']['api-key'] == nil
 			skip
@@ -51,7 +51,34 @@ class VTUrlTest < Minitest::Test
 		results = Uirusu::VTUrl.query_report(@app_test.config['virustotal']['api-key'], url)
 		result = Uirusu::VTResult.new(url, results)
 
-		assert_equal 68, result.results.size
+		assert_equal 65, result.results.size
+	end
+
+	def test_submit_single_url
+		# Skip the test if we dont have a API key
+		if @app_test.config.empty? || @app_test.config['virustotal']['api-key'] == nil
+			skip
+		end
+
+		url = "http://www.google.com"
+
+		results = Uirusu::VTUrl.scan_url(@app_test.config['virustotal']['api-key'], url)
+		assert_equal 1, results["response_code"]
+	end
+
+	def test_submit_multiple_urls
+		# Skip the test if we dont have a API key
+		if @app_test.config.empty? || @app_test.config['virustotal']['api-key'] == nil
+			skip
+		end
+
+		urls = ["http://www.google.com", "http://www.cnn.com", "http://www.npr.com", "http://hammackj.com"]
+
+		results = Uirusu::VTUrl.scan_url(@app_test.config['virustotal']['api-key'], urls.join("\n"))
+
+		results.each do |result|
+			assert_equal 1, result["response_code"]
+		end
 	end
 
 	def test_return_additional_info_for_url_google_com
