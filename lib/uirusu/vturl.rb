@@ -31,7 +31,7 @@ module Uirusu
 		# @param resource url to submit
 		#
 		# @return [JSON] Parsed response
-		def self.scan_url(api_key, resource)
+		def self.scan_url api_key, resource
 			if resource == nil
 				raise "Invalid resource, must be a valid url"
 			end
@@ -49,7 +49,7 @@ module Uirusu
 		# @param resource url to search
 		#
 		# @return [JSON] Parsed response
-		def self.query_report(api_key, resource, **args)
+		def self.query_report api_key, resource, **args
 			if resource == nil
 				raise "Invalid resource, must be a valid url"
 			end
