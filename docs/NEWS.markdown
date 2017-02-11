@@ -1,7 +1,9 @@
 # News
 
 # 1.1.0 (March 1, 2017)
-- Move github repositort from github.com/arxopia/uirusu to github.com/hammackj/uirusu
+- **Moved Github repository from http://github.com/arxopia/uirusu to http://github.com/hammackj/uirusu**
+- Fixed File query report
+- Fixed Url API
 - Updated copyrights to 2017
 - Fixed unit test for vturl
 
