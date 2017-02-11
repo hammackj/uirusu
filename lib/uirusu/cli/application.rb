@@ -196,6 +196,20 @@ module Uirusu
 				end
 
 				@options[:timeout] = @config['virustotal']['timeout'] if @config['virustotal']['timeout'] != nil
+				@options["proxy"] = @config['virustotal']['proxy'] if @config['virustotal']['proxy'] != nil
+				@options["ssl_ca_cert"] = @config['virustotal']['ssl_ca_cert'] if @config['virustotal']['ssl_ca_cert'] != nil
+				@options["verify_ssl"] = @config['virustotal']['verify_ssl'] if @config['virustotal']['verify_ssl'] != nil
+
+				process_ssl_proxy
+			end
+
+			# Processes SSL and Proxy Related Options
+			#
+			def process_ssl_proxy
+				if @options['proxy'] != nil
+					puts "[DEBUG] Proxy enabled: #{@options['proxy']}"
+					RestClient.proxy = @options['proxy']
+				end
 			end
 
 			# Submits a file/url and waits for analysis to be complete and returns the results.
@@ -277,7 +291,7 @@ module Uirusu
 				end
 			end
 
-			#
+			# Main entry point for uirusu 
 			#
 			def main(args)
 				parse_options(args)
@@ -291,10 +305,6 @@ module Uirusu
 					output_method = :to_yaml
 				elsif @options['output'] == :xml
 					output_method = :to_xml
-				end
-
-				if @options['proxy'] != nil
-					RestClient.proxy = @options['proxy']
 				end
 
 				if @options[:directory] != nil
