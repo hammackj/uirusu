@@ -1,5 +1,10 @@
 # News
 
+# 1.1.0 (March 1, 2017)
+- Move github repositort from github.com/arxopia/uirusu to github.com/hammackj/uirusu
+- Updated copyrights to 2017
+- Fixed unit test for vturl
+
 # 1.0.2 (September 21, 2016)
 - Added Private API support [@joshporter1]
 
