@@ -62,7 +62,7 @@ module Uirusu
 						end
 
 						opt.on('-f FILE', '--search-hash-file FILE', 'Searches each hash in a file of hashes on virustotal.com') do |file|
-							if File.exists?(file)
+							if File.exist?(file)
 								puts "[+] Adding file #{file}" if @options['verbose']
 								@files_of_hashes.push(file)
 							else
@@ -71,7 +71,7 @@ module Uirusu
 						end
 
 						opt.on('-u FILE', '--upload-file FILE', 'Uploads a file to virustotal.com for analysis') do |file|
-							if File.exists?(file)
+							if File.exist?(file)
 								puts "[+] Adding file #{file}" if @options['verbose']
 								@uploads.push(file)
 							else
@@ -156,7 +156,7 @@ module Uirusu
 			def create_config file=CONFIG_FILE
 				f = File.expand_path(file)
 
-				if File.exists?(f) == false
+				if File.exist?(f) == false
 					File.open(f, 'w+') do |of|
 						of.write("virustotal: \n  api-key: \n  timeout: 25\n\n")
 					end
@@ -174,7 +174,7 @@ module Uirusu
 
 				f = File.expand_path(file)
 
-				if File.exists?(f)
+				if File.exist?(f)
 					@config = YAML.load_file f
 				else
 					if ENV['UIRUSU_VT_API_KEY']

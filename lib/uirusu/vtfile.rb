@@ -64,7 +64,7 @@ module Uirusu
 		#
 		# @return [JSON] Parsed response
 		def self.scan_file(api_key, path_to_file, **args)
-			if !File.exists?(path_to_file)
+			if !File.exist?(path_to_file)
 				raise Errno::ENOENT
 			end
 

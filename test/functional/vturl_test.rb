@@ -31,7 +31,7 @@ class VTUrlTest < Minitest::Test
 		$stdout = File.open(File::NULL, "w")
 
 		@app_test = Uirusu::CLI::Application.new
-		@app_test.load_config if File.exists?(Uirusu::CONFIG_FILE)
+		@app_test.load_config if File.exist?(Uirusu::CONFIG_FILE)
 	end
 
 	# Restore STDOUT/STDERR after each test
