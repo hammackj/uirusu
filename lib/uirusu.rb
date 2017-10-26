@@ -46,7 +46,7 @@ module Uirusu
 				response = resource.post(params)
 			else
 				#response = RestClient.get url, params: params
-				response = resource.get(params)
+				response = resource.get(params: params)
 			end
 		rescue => e
 			response = e.response
