@@ -54,6 +54,17 @@ class VTFileTest < Minitest::Test
 		assert_equal 55, result.results.size
 	end
 
+	def test_return_scan_upload_url
+		if @app_test.config.empty? || @app_test.config['virustotal']['api-key'] == nil
+			skip
+		end
+
+		#return a JSON response containing an upload URL
+		result = Uirusu::VTFile.scan_upload_url @app_test.config['virustotal']['api-key']
+
+		assert_includes result.keys, "upload_url"
+	end
+
 	def test_return_additional_info_for_hash_FD287794107630FA3116800E617466A9
 		# Skip the test if we dont have a API key
 		if @app_test.config.empty? || @app_test.config['virustotal']['api-key'] == nil || !@app_test.config['virustotal']['private']

@@ -51,7 +51,7 @@ class VTUrlTest < Minitest::Test
 		results = Uirusu::VTUrl.query_report(@app_test.config['virustotal']['api-key'], url)
 		result = Uirusu::VTResult.new(url, results)
 
-		assert_equal 65, result.results.size
+		assert_equal 63, result.results.size
 	end
 
 	def test_submit_single_url
