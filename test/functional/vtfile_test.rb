@@ -54,9 +54,10 @@ class VTFileTest < Minitest::Test
 		assert_equal 55, result.results.size
 	end
 
+	# private-api
 	def test_return_scan_upload_url
-		if @app_test.config.empty? || @app_test.config['virustotal']['api-key'] == nil
-			skip
+		if @app_test.config.empty? || @app_test.config['virustotal']['api-key'] == nil || !@app_test.config['virustotal']['private']
+			skip "scan_upload_url private-api"
 		end
 
 		#return a JSON response containing an upload URL
