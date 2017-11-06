@@ -1,5 +1,8 @@
 # News
 
+# 1.1.1 ()
+- Fixed File.exist? deprecations [@ninoseki]
+
 # 1.1.0 (March 1, 2017)
 - **Moved Github repository from http://github.com/arxopia/uirusu to http://github.com/hammackj/uirusu**
 - Fixed File query report
