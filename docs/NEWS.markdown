@@ -1,9 +1,10 @@
 # News
 
-# 1.1.1 ()
+# 1.1.1 (November 6, 2017)
 - Fixed File.exist? deprecations [@ninoseki]
+- Fixed Fix issue with RestClient GET requests #16 [@joshporter1]
 
-# 1.1.0 (March 1, 2017)
+# 1.1.0 (February 11, 2017)
 - **Moved Github repository from http://github.com/arxopia/uirusu to http://github.com/hammackj/uirusu**
 - Fixed File query report
 - Fixed Url API

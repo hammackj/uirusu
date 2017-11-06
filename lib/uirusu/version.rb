@@ -20,7 +20,7 @@
 
 module Uirusu
 	APP_NAME = "uirusu"
-	VERSION = "1.1.0"
+	VERSION = "1.1.1"
 	HOME_PAGE = "http://hammackj.github.io/uirusu"
 	AUTHOR = "Jacob Hammack"
 	EMAIL = "jacob.hammack@hammackj.com"
