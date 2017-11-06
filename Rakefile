@@ -49,6 +49,14 @@ task :clean do
 	system "rm -rf coverage"
 end
 
+task :console do
+  require 'irb'
+  require 'irb/completion'
+  require 'uirusu' # You know what to do.
+  ARGV.clear
+  IRB.start
+end
+
 task :default => [:test]
 
 Rake::TestTask.new("test") do |t|
